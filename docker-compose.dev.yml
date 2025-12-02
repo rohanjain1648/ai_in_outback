@@ -1,0 +1,104 @@
+# Docker Compose for development environment
+# Simplified configuration for local development
+
+version: '3.8'
+
+services:
+  # Frontend development service
+  frontend-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: rural-connect-frontend-dev
+    ports:
+      - "5173:5173"
+    environment:
+      - NODE_ENV=development
+      - VITE_API_URL=http://localhost:3000
+    volumes:
+      - .:/app
+      - /app/node_modules
+    networks:
+      - rural-connect-dev-network
+    restart: unless-stopped
+    command: npm run dev
+
+  # Backend development service
+  backend-dev:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.dev
+    container_name: rural-connect-backend-dev
+    ports:
+      - "3000:3000"
+      - "9229:9229" # Debug port
+    environment:
+      - NODE_ENV=development
+      - PORT=3000
+      - MONGODB_URI=mongodb://mongodb-dev:27017/rural-connect-ai-dev
+      - REDIS_URL=redis://redis-dev:6379
+      - JWT_SECRET=dev-secret-key
+    depends_on:
+      - mongodb-dev
+      - redis-dev
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    networks:
+      - rural-connect-dev-network
+    restart: unless-stopped
+    command: npm run dev
+
+  # MongoDB for development
+  mongodb-dev:
+    image: mongo:6.0
+    container_name: rural-connect-mongodb-dev
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_DATABASE=rural-connect-ai-dev
+    volumes:
+      - mongodb_dev_data:/data/db
+    networks:
+      - rural-connect-dev-network
+    restart: unless-stopped
+
+  # Redis for development
+  redis-dev:
+    image: redis:7-alpine
+    container_name: rural-connect-redis-dev
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_dev_data:/data
+    networks:
+      - rural-connect-dev-network
+    restart: unless-stopped
+
+  # Elasticsearch for development
+  elasticsearch-dev:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.8.0
+    container_name: rural-connect-elasticsearch-dev
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - "ES_JAVA_OPTS=-Xms256m -Xmx256m"
+    ports:
+      - "9200:9200"
+    volumes:
+      - elasticsearch_dev_data:/usr/share/elasticsearch/data
+    networks:
+      - rural-connect-dev-network
+    restart: unless-stopped
+
+networks:
+  rural-connect-dev-network:
+    driver: bridge
+
+volumes:
+  mongodb_dev_data:
+    driver: local
+  redis_dev_data:
+    driver: local
+  elasticsearch_dev_data:
+    driver: local

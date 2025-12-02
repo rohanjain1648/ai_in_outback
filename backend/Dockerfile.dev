@@ -1,0 +1,24 @@
+# Development Dockerfile for Rural Connect AI Backend
+
+FROM node:18-alpine
+
+# Install development tools
+RUN apk add --no-cache git curl
+
+# Set working directory
+WORKDIR /app
+
+# Copy package files
+COPY package*.json ./
+
+# Install all dependencies (including dev dependencies)
+RUN npm install
+
+# Copy source code
+COPY . .
+
+# Expose ports (3000 for app, 9229 for debugging)
+EXPOSE 3000 9229
+
+# Start development server with debugging
+CMD ["npm", "run", "dev"]

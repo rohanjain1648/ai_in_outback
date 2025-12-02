@@ -1,0 +1,240 @@
+import express from 'express';
+import { GeolocationService } from '../services/geolocationService';
+import { auth } from '../middleware/auth';
+import { validateLocationUpdate, validateLocationSearch } from '../validation/locationValidation';
+import { ApiResponse } from '../utils/response';
+import { calculateDistance, getRegionsByState, getRegionsByType, findNearestCity, isWithinAustralia } from '../utils/geolocation';
+
+const router = express.Router();
+
+/**
+ * Update user location
+ */
+router.put('/update', auth, validateLocationUpdate, async (req, res) => {
+  try {
+    const { coordinates, address, source, accuracy, privacy } = req.body;
+    const userId = req.user.id;
+
+    // Validate coordinates are within Australia
+    if (!isWithinAustralia(coordinates.latitude, coordinates.longitude)) {
+      return res.status(400).json(
+        ApiResponse.error('Location must be within Australia', 'INVALID_LOCATION')
+      );
+    }
+
+    const location = await GeolocationService.updateUserLocation(
+      userId,
+      {
+        latitude: coordinates.latitude,
+        longitude: coordinates.longitude,
+        address,
+        source,
+        accuracy
+      },
+      privacy || { isPrivate: false, anonymized: false }
+    );
+
+    res.json(ApiResponse.success(location, 'Location updated successfully'));
+  } catch (error) {
+    console.error('Location update error:', error);
+    res.status(500).json(ApiResponse.error('Failed to update location'));
+  }
+});
+
+/**
+ * Get user's current location
+ */
+router.get('/current', auth, async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const location = await GeolocationService.getUserLocation(userId, userId);
+
+    if (!location) {
+      return res.status(404).json(
+        ApiResponse.error('Location not found', 'LOCATION_NOT_FOUND')
+      );
+    }
+
+    res.json(ApiResponse.success(location));
+  } catch (error) {
+    console.error('Get location error:', error);
+    res.status(500).json(ApiResponse.error('Failed to get location'));
+  }
+});
+
+/**
+ * Get another user's location (respects privacy settings)
+ */
+router.get('/user/:userId', auth, async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const requesterId = req.user.id;
+    
+    const location = await GeolocationService.getUserLocation(userId, requesterId);
+
+    if (!location) {
+      return res.status(404).json(
+        ApiResponse.error('Location not found or private', 'LOCATION_NOT_FOUND')
+      );
+    }
+
+    res.json(ApiResponse.success(location));
+  } catch (error) {
+    console.error('Get user location error:', error);
+    res.status(500).json(ApiResponse.error('Failed to get user location'));
+  }
+});
+
+/**
+ * Find nearby users
+ */
+router.post('/nearby', auth, validateLocationSearch, async (req, res) => {
+  try {
+    const { coordinates, radius, filters } = req.body;
+    const userId = req.user.id;
+
+    const nearbyUsers = await GeolocationService.findNearbyUsers(
+      coordinates.latitude,
+      coordinates.longitude,
+      radius,
+      userId,
+      filters
+    );
+
+    res.json(ApiResponse.success({
+      users: nearbyUsers,
+      count: nearbyUsers.length,
+      searchRadius: radius,
+      center: coordinates
+    }));
+  } catch (error) {
+    console.error('Nearby users search error:', error);
+    res.status(500).json(ApiResponse.error('Failed to find nearby users'));
+  }
+});
+
+/**
+ * Search locations by region
+ */
+router.post('/search', auth, async (req, res) => {
+  try {
+    const { filters } = req.body;
+    
+    const locations = await GeolocationService.getLocationsByRegion(filters);
+
+    res.json(ApiResponse.success({
+      locations,
+      count: locations.length,
+      filters
+    }));
+  } catch (error) {
+    console.error('Location search error:', error);
+    res.status(500).json(ApiResponse.error('Failed to search locations'));
+  }
+});
+
+/**
+ * Calculate distance between current user and another user
+ */
+router.get('/distance/:userId', auth, async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const currentUserId = req.user.id;
+
+    const distance = await GeolocationService.calculateUserDistance(currentUserId, userId);
+
+    if (distance === null) {
+      return res.status(404).json(
+        ApiResponse.error('Unable to calculate distance - location data not available')
+      );
+    }
+
+    res.json(ApiResponse.success({
+      distance: Math.round(distance),
+      unit: 'km'
+    }));
+  } catch (error) {
+    console.error('Distance calculation error:', error);
+    res.status(500).json(ApiResponse.error('Failed to calculate distance'));
+  }
+});
+
+/**
+ * Get regional statistics
+ */
+router.get('/stats/regional', auth, async (req, res) => {
+  try {
+    const stats = await GeolocationService.getRegionalStats();
+    res.json(ApiResponse.success(stats));
+  } catch (error) {
+    console.error('Regional stats error:', error);
+    res.status(500).json(ApiResponse.error('Failed to get regional statistics'));
+  }
+});
+
+/**
+ * Get regions by state
+ */
+router.get('/regions/:state', async (req, res) => {
+  try {
+    const { state } = req.params;
+    const regions = getRegionsByState(state.toUpperCase());
+    
+    res.json(ApiResponse.success(regions));
+  } catch (error) {
+    console.error('Get regions error:', error);
+    res.status(500).json(ApiResponse.error('Failed to get regions'));
+  }
+});
+
+/**
+ * Get regions by type
+ */
+router.get('/regions/type/:type', async (req, res) => {
+  try {
+    const { type } = req.params;
+    
+    if (!['urban', 'rural', 'remote'].includes(type)) {
+      return res.status(400).json(
+        ApiResponse.error('Invalid region type. Must be urban, rural, or remote')
+      );
+    }
+    
+    const regions = getRegionsByType(type as 'urban' | 'rural' | 'remote');
+    
+    res.json(ApiResponse.success(regions));
+  } catch (error) {
+    console.error('Get regions by type error:', error);
+    res.status(500).json(ApiResponse.error('Failed to get regions by type'));
+  }
+});
+
+/**
+ * Find nearest city to coordinates
+ */
+router.post('/nearest-city', async (req, res) => {
+  try {
+    const { latitude, longitude } = req.body;
+    
+    if (!latitude || !longitude) {
+      return res.status(400).json(
+        ApiResponse.error('Latitude and longitude are required')
+      );
+    }
+    
+    const nearestCity = findNearestCity(latitude, longitude);
+    
+    if (!nearestCity) {
+      return res.status(404).json(
+        ApiResponse.error('No nearby city found')
+      );
+    }
+    
+    res.json(ApiResponse.success(nearestCity));
+  } catch (error) {
+    console.error('Find nearest city error:', error);
+    res.status(500).json(ApiResponse.error('Failed to find nearest city'));
+  }
+});
+
+export default router;

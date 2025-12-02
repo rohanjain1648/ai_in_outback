@@ -1,0 +1,93 @@
+import Joi from 'joi';
+import { Request, Response, NextFunction } from 'express';
+import { ApiResponse } from '../utils/response';
+
+const coordinatesSchema = Joi.object({
+  latitude: Joi.number().min(-90).max(90).required(),
+  longitude: Joi.number().min(-180).max(180).required()
+});
+
+const addressSchema = Joi.object({
+  street: Joi.string().optional(),
+  suburb: Joi.string().optional(),
+  city: Joi.string().required(),
+  state: Joi.string().valid('NSW', 'VIC', 'QLD', 'WA', 'SA', 'TAS', 'NT', 'ACT').required(),
+  postcode: Joi.string().pattern(/^\d{4}$/).required(),
+  country: Joi.string().default('Australia')
+});
+
+const privacySchema = Joi.object({
+  isPrivate: Joi.boolean().default(false),
+  anonymized: Joi.boolean().default(false)
+});
+
+const locationUpdateSchema = Joi.object({
+  coordinates: coordinatesSchema.required(),
+  address: addressSchema.optional(),
+  source: Joi.string().valid('gps', 'manual', 'ip', 'postcode').required(),
+  accuracy: Joi.number().min(0).optional(),
+  privacy: privacySchema.optional()
+});
+
+const locationSearchSchema = Joi.object({
+  coordinates: coordinatesSchema.required(),
+  radius: Joi.number().min(0.1).max(1000).required(), // Max 1000km radius
+  filters: Joi.object({
+    state: Joi.string().valid('NSW', 'VIC', 'QLD', 'WA', 'SA', 'TAS', 'NT', 'ACT').optional(),
+    regionType: Joi.string().valid('urban', 'rural', 'remote').optional(),
+    maxDistance: Joi.number().min(0.1).max(1000).optional(),
+    centerPoint: coordinatesSchema.optional()
+  }).optional()
+});
+
+const regionFilterSchema = Joi.object({
+  state: Joi.string().valid('NSW', 'VIC', 'QLD', 'WA', 'SA', 'TAS', 'NT', 'ACT').optional(),
+  regionType: Joi.string().valid('urban', 'rural', 'remote').optional(),
+  maxDistance: Joi.number().min(0.1).max(1000).optional(),
+  centerPoint: coordinatesSchema.optional()
+});
+
+export const validateLocationUpdate = (req: Request, res: Response, next: NextFunction) => {
+  const { error } = locationUpdateSchema.validate(req.body);
+  
+  if (error) {
+    return res.status(400).json(
+      ApiResponse.error(
+        `Validation error: ${error.details[0].message}`,
+        'VALIDATION_ERROR'
+      )
+    );
+  }
+  
+  next();
+};
+
+export const validateLocationSearch = (req: Request, res: Response, next: NextFunction) => {
+  const { error } = locationSearchSchema.validate(req.body);
+  
+  if (error) {
+    return res.status(400).json(
+      ApiResponse.error(
+        `Validation error: ${error.details[0].message}`,
+        'VALIDATION_ERROR'
+      )
+    );
+  }
+  
+  next();
+};
+
+export const validateRegionFilter = (req: Request, res: Response, next: NextFunction) => {
+  const { error } = regionFilterSchema.validate(req.body.filters || {});
+  
+  if (error) {
+    return res.status(400).json(
+      ApiResponse.error(
+        `Validation error: ${error.details[0].message}`,
+        'VALIDATION_ERROR'
+      )
+    );
+  }
+  
+  next();
+};
