@@ -2,6 +2,13 @@
 
 Write-Host "🌏 Starting Rural Connect AI Platform..." -ForegroundColor Green
 
+# Setup environment files if they don't exist
+if (!(Test-Path "backend/.env")) {
+    Write-Host "🔧 Setting up environment files..." -ForegroundColor Yellow
+    & .\setup-env.ps1
+    Write-Host ""
+}
+
 # Check if Node.js is installed
 if (!(Get-Command node -ErrorAction SilentlyContinue)) {
     Write-Host "❌ Node.js is not installed. Please install Node.js first." -ForegroundColor Red
