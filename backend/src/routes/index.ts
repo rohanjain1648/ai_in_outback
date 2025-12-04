@@ -81,6 +81,7 @@ router.get(`${API_VERSION}`, (req, res) => {
       skills: `${API_VERSION}/skills`,
       wellbeing: `${API_VERSION}/wellbeing`,
       gigs: `${API_VERSION}/gigs`,
+      services: `${API_VERSION}/services`,
     },
     documentation: 'https://docs.ruralconnectai.com',
   });
