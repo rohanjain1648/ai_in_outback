@@ -12,6 +12,8 @@ import skillsRoutes from './skills';
 import wellbeingRoutes from './wellbeing';
 import healthRoutes from './health';
 import chatRoutes from './chat';
+import gigsRoutes from './gigs';
+import servicesRoutes from './services';
 
 const router = Router();
 
@@ -54,6 +56,12 @@ router.use(`${API_VERSION}/skills`, skillsRoutes);
 // Mental health and wellbeing routes
 router.use(`${API_VERSION}/wellbeing`, wellbeingRoutes);
 
+// Gig economy micro-job routes
+router.use(`${API_VERSION}/gigs`, gigsRoutes);
+
+// Service directory routes
+router.use(`${API_VERSION}/services`, servicesRoutes);
+
 // API documentation route
 router.get(`${API_VERSION}`, (req, res) => {
   res.json({
@@ -72,6 +80,7 @@ router.get(`${API_VERSION}`, (req, res) => {
       culture: `${API_VERSION}/culture`,
       skills: `${API_VERSION}/skills`,
       wellbeing: `${API_VERSION}/wellbeing`,
+      gigs: `${API_VERSION}/gigs`,
     },
     documentation: 'https://docs.ruralconnectai.com',
   });
