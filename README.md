@@ -1,14 +1,13 @@
 # Rural Connect AI 🌏
 
-> **Hackathon Submission**: An intelligent community platform designed specifically for regional and rural Australia, featuring voice-first accessibility, blockchain trust, and ethereal UI/UX.
+> An intelligent community platform designed specifically for regional and rural Australia, featuring voice-first accessibility, blockchain trust, and immersive UI/UX.
 
-[![Live Demo](https://img.shields.io/badge/demo-live-success)](https://rural-connect-ai.vercel.app)
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-[![Built with Kiro](https://img.shields.io/badge/built%20with-Kiro-purple)](https://kiro.ai)
 
-An intelligent community platform designed specifically for regional and rural Australia. The platform addresses critical challenges faced by rural communities including social isolation, limited access to services, economic opportunities, and emergency preparedness.
+## 🎯 Overview
 
-## 🎬 **HACKATHON JUDGES: Quick Demo Setup**
+Rural Connect AI addresses critical challenges faced by rural communities including social isolation, limited access to services, economic opportunities, and emergency preparedness. Our platform combines cutting-edge AI, blockchain technology, and voice-first design to create an accessible, trustworthy, and engaging community platform.
+
+## ⚡ Quick Start for Judges
 
 **Want to see the platform with realistic data? Run this one command:**
 
@@ -20,137 +19,139 @@ An intelligent community platform designed specifically for regional and rural A
 ./setup-demo.sh
 ```
 
-Then login with: **sarah@demo.com** / **demo123**
+Then open [http://localhost:5173](http://localhost:5173) and explore!
 
-📖 **Full demo guide:** See [README_DEMO.md](README_DEMO.md) or [DEMO_PACKAGE_COMPLETE.md](DEMO_PACKAGE_COMPLETE.md)
+📖 **Full demo guide:** See [DEMO_WALKTHROUGH.md](DEMO_WALKTHROUGH.md)
 
-## 🎯 Hackathon Features
+## ✨ Key Features
 
 ### 🎤 Voice-First Interface
-- **Web Speech API Integration**: Hands-free interaction for users while driving or working
-- **Natural Language Processing**: Speak naturally to search, navigate, and post jobs
-- **Text-to-Speech Feedback**: Audio responses for accessibility and convenience
-- **Multi-language Support**: Including Aboriginal language terms
+- **Hands-free interaction** for users while driving or working
+- **Natural language processing** for intuitive commands
+- **Text-to-speech feedback** for accessibility
+- **Multi-language support** including Aboriginal language terms
 
 ### 👻 Ethereal Notification System
-- **Holographic Effects**: Stunning visual notifications with glow and particle effects
-- **Contextual Sounds**: Web Audio API integration for immersive feedback
-- **Spirit Avatars**: AI-generated personalized avatars using DALL-E
-- **Haptic Feedback**: Mobile device vibration for important alerts
+- **Holographic effects** with stunning visual animations
+- **Contextual sounds** using Web Audio API
+- **Spirit avatars** with AI-generated personalized designs
+- **Haptic feedback** for mobile devices
 
 ### 💼 Gig Economy Platform
-- **AI-Powered Matching**: Smart job-to-worker matching based on skills and location
-- **Micro-Job Board**: Post and find short-term work opportunities
-- **Mutual Ratings**: Build trust through transparent reputation system
-- **Real-time Updates**: Socket.io integration for instant job status changes
+- **AI-powered job matching** based on skills and location
+- **Micro-job board** for short-term work opportunities
+- **Mutual ratings** for transparent reputation building
+- **Real-time updates** via Socket.io
 
 ### 🔗 Blockchain Trust System
-- **NFT Credentials**: Verifiable achievement badges on Polygon blockchain
-- **Immutable Reputation**: Tamper-proof trust scores and verification
-- **Offline Queue**: Transaction queuing for areas with poor connectivity
-- **Public Verification**: Anyone can verify credentials via blockchain
+- **NFT credentials** on Polygon blockchain
+- **Immutable reputation** with tamper-proof verification
+- **Offline queue** for areas with poor connectivity
+- **Public verification** for transparent trust
 
 ### 🗺️ Service Navigator
-- **Government API Integration**: Access to Australian health, transport, and government services
-- **Voice Search**: Find services using natural language voice commands
-- **Offline Cache**: Essential services available without internet
-- **Low-Data Mode**: Optimized for rural connectivity challenges
+- **Government API integration** for Australian services
+- **Voice search** with natural language
+- **Offline cache** for essential services
+- **Low-data mode** optimized for rural connectivity
 
-### ✨ Spirit Trails Map
-- **3D Visualization**: Three.js powered animated connections between users
-- **Glowing Beacons**: Event markers with pulsing animations
-- **AR Overlay**: WebXR support for augmented reality experience
-- **Performance Optimized**: Dynamic LOD for smooth mobile experience
+### 🌾 Agriculture Intelligence
+- **Farm dashboard** with crop and livestock management
+- **Weather forecasting** with agricultural insights
+- **Market prices** with real-time trends
+- **Crop health analysis** using AI
+
+### 💚 Wellbeing Support
+- **Mental health check-ins** with mood tracking
+- **Crisis resources** (Beyond Blue, Lifeline)
+- **Peer support matching** with AI
+- **Wellbeing trends** and insights
+
+### 🏪 Business Networking
+- **Business directory** for rural enterprises
+- **Economic opportunities** discovery
+- **Analytics dashboard** for business insights
+- **AI-powered business matching**
 
 ### 📊 Metrics Dashboard
-- **Real-time Analytics**: Live platform usage and impact statistics
-- **Geographic Distribution**: User density maps across rural regions
-- **Impact Calculations**: Time saved, connections made, economic value
-- **Demo Data**: Simulated realistic data for demonstration
+- **Real-time analytics** of platform usage
+- **Geographic distribution** maps
+- **Impact calculations** (time saved, economic value)
+- **Engagement metrics** and trends
 
-## 🌟 Core Features
-
-- 🤖 AI-powered community matching and networking
-- 🌾 Agricultural intelligence and farm management support
-- 🚨 Emergency preparedness and community safety
-- 🏪 Local business and economic opportunity platform
-- 📚 Cultural heritage and storytelling platform
-- 🎓 Skills sharing and community learning
-- 💚 Mental health and wellbeing support
-- 🎨 Advanced UI/UX with Three.js integration
-- 📱 Offline capability and connectivity resilience
-- ♿ WCAG AAA accessibility compliance
+### ✨ Spirit Trails Map
+- **3D visualization** with Three.js
+- **Animated connections** between users
+- **Event beacons** with pulsing effects
+- **AR overlay** support with WebXR
 
 ## 🛠️ Tech Stack
 
 ### Frontend
-- **Framework**: React 18 + TypeScript + Vite
-- **3D Graphics**: Three.js + React Three Fiber
-- **Animations**: Framer Motion
-- **Styling**: Tailwind CSS
-- **Voice**: Web Speech API
-- **Audio**: Web Audio API
-- **AR**: WebXR Device API
+- **React 18** with TypeScript
+- **Vite** for blazing-fast development
+- **Three.js** + React Three Fiber for 3D graphics
+- **Framer Motion** for smooth animations
+- **Tailwind CSS** for styling
+- **Chart.js** for data visualization
+- **Web Speech API** for voice interface
+- **Socket.io Client** for real-time updates
 
 ### Backend
-- **Runtime**: Node.js + Express + TypeScript
-- **Database**: MongoDB + Mongoose
-- **Cache**: Redis
-- **Search**: Elasticsearch
-- **Real-time**: Socket.io
-- **Blockchain**: ethers.js + Polygon
+- **Node.js** + Express with TypeScript
+- **MongoDB** with Mongoose ODM
+- **Redis** for caching
+- **Socket.io** for real-time communication
+- **JWT** for authentication
+- **ethers.js** for blockchain integration
 
 ### External Services
-- **AI**: OpenAI (DALL-E for avatars)
-- **Government APIs**: data.gov.au, Health Direct
-- **Blockchain**: Polygon Mumbai Testnet
-- **Translation**: Google Translate API
+- **OpenAI API** for AI features
+- **Polygon Mumbai** testnet for blockchain
+- **Australian Government APIs** (data.gov.au, Health Direct)
+- **Weather APIs** for agricultural forecasting
 
 ### Testing & Quality
-- **Testing**: Jest + React Testing Library
-- **E2E**: Playwright
-- **Code Quality**: ESLint + Prettier
-- **Accessibility**: jest-axe
+- **Jest** + React Testing Library
+- **Playwright** for E2E testing
+- **jest-axe** for accessibility testing
+- **ESLint** + Prettier for code quality
 
-## 🚀 Quick Start
+## 🚀 Installation & Setup
 
-### Try the Live Demo
+### Prerequisites
 
-Visit **[rural-connect-ai.vercel.app](https://rural-connect-ai.vercel.app)** to experience the platform immediately.
-
-**Demo Credentials:**
-- Email: `demo@ruralconnect.au`
-- Password: `demo2024`
-
-### Local Development
-
-#### Prerequisites
-
-- Node.js (v18 or higher)
-- MongoDB (or use Docker)
-- Redis (optional, for caching)
+- Node.js v18 or higher
 - npm or yarn
+- MongoDB (optional - mock server available)
+- Redis (optional)
 
-#### Quick Setup (Frontend Only)
+### Quick Setup (Frontend Only with Mock Backend)
 
 ```bash
 # Clone the repository
 git clone https://github.com/yourusername/rural-connect-ai.git
 cd rural-connect-ai
 
-# Install dependencies
+# Install frontend dependencies
 npm install
 
-# Set up environment
-cp .env.development .env
+# Install backend dependencies
+cd backend
+npm install
+cd ..
 
-# Start development server
+# Start mock backend server
+cd backend
+node mock-server.js
+
+# In another terminal, start frontend
 npm run dev
 ```
 
 Open [http://localhost:5173](http://localhost:5173) in your browser.
 
-#### Full Stack Setup
+### Full Stack Setup (with MongoDB)
 
 ```bash
 # Install all dependencies
@@ -159,69 +160,48 @@ cd backend && npm install && cd ..
 
 # Set up environment files
 cp backend/.env.example backend/.env
+# Edit backend/.env with your MongoDB URI and other settings
 
-# Start MongoDB and Redis (Docker)
+# Start MongoDB (if using Docker)
 docker-compose -f docker-compose.dev.yml up -d mongodb redis
 
 # Start backend
-cd backend && npm run dev
+cd backend
+npm run dev
 
 # In another terminal, start frontend
 npm run dev
 ```
 
-#### Using PowerShell Scripts (Windows)
+### Using PowerShell Scripts (Windows)
 
 ```powershell
 # Set up environment
 .\setup-env.ps1
 
-# Start frontend only
+# Start frontend only with mock backend
 .\start-frontend-only.ps1
 
 # Start full stack
 .\start-local.ps1
 ```
 
-### Available Scripts
-
-**Frontend:**
-- `npm run dev` - Start development server (Vite)
-- `npm run build` - Build for production
-- `npm run preview` - Preview production build
-- `npm run test` - Run tests
-- `npm run test:watch` - Run tests in watch mode
-- `npm run lint` - Run ESLint
-
-**Backend:**
-- `cd backend && npm run dev` - Start backend server
-- `cd backend && npm run build` - Build backend
-- `cd backend && npm test` - Run backend tests
-
-**Full Stack:**
-- `npm run start:all` - Start both frontend and backend
-- `npm run test:all` - Run all tests
-
 ## 📁 Project Structure
 
 ```
 rural-connect-ai/
-├── .kiro/                          # Kiro spec-driven development files
-│   └── specs/
-│       └── hackathon-enhancements/ # Feature specifications
-│           ├── requirements.md     # EARS-compliant requirements
-│           ├── design.md          # Comprehensive design document
-│           └── tasks.md           # Implementation task list
 ├── src/                           # Frontend source code
 │   ├── components/
-│   │   ├── voice/                # Voice interface components
-│   │   ├── notifications/        # Ethereal notification system
-│   │   ├── gig/                  # Gig board components
-│   │   ├── blockchain/           # Blockchain credential display
+│   │   ├── voice/                # Voice interface
+│   │   ├── notifications/        # Ethereal notifications
+│   │   ├── gig/                  # Gig board
+│   │   ├── blockchain/           # Blockchain credentials
 │   │   ├── services/             # Service navigator
-│   │   ├── three/                # 3D graphics and spirit trails
+│   │   ├── three/                # 3D graphics
 │   │   ├── admin/                # Metrics dashboard
-│   │   └── accessibility/        # Accessibility features
+│   │   ├── agriculture/          # Farm management
+│   │   ├── wellbeing/            # Mental health
+│   │   └── business/             # Business networking
 │   ├── services/                 # API services
 │   ├── hooks/                    # Custom React hooks
 │   ├── types/                    # TypeScript definitions
@@ -233,118 +213,84 @@ rural-connect-ai/
 │   │   ├── routes/               # API endpoints
 │   │   ├── middleware/           # Express middleware
 │   │   └── validation/           # Input validation
-│   └── scripts/                  # Database seeding scripts
+│   ├── mock-server.js            # Mock backend for development
+│   └── scripts/                  # Database seeding
 ├── __tests__/                     # Test files
+│   ├── accessibility/            # Accessibility tests
+│   ├── e2e/                      # End-to-end tests
+│   ├── integration/              # Integration tests
+│   ├── mobile/                   # Mobile tests
+│   └── performance/              # Performance tests
+├── public/                        # Static assets
+├── scripts/                       # Build and deployment scripts
 └── docs/                          # Documentation
 ```
 
-## 🎬 Demo Walkthrough
+## 🎬 Feature Demonstrations
 
-### 1. Voice Interface Demo
-1. Click the microphone icon in the navigation bar
+### 1. Voice Interface
+```
+1. Click the microphone icon in navigation
 2. Say "Search for agricultural services"
-3. Watch as the voice command is processed and results appear
-4. Try other commands: "Go to gig board", "Show my profile"
+3. Watch voice command processing
+4. Try: "Go to gig board", "Show my profile"
+```
 
 ### 2. Ethereal Notifications
-1. Navigate to the Notifications demo page
-2. Click "Trigger Notification" to see holographic effects
-3. Notice the glowing animations and particle effects
-4. Check the notification history panel
+```
+1. Navigate to Notifications demo
+2. Click "Trigger Notification"
+3. Observe holographic effects
+4. Check notification history
+```
 
 ### 3. Gig Board
-1. Go to the Gig Board section
-2. Browse available micro-jobs with AI matching scores
-3. Click "Post a Job" to create a new gig
-4. Apply to a job and see real-time status updates
+```
+1. Browse available micro-jobs
+2. View AI matching scores
+3. Post a new gig
+4. Apply to jobs with real-time updates
+```
 
 ### 4. Blockchain Credentials
-1. Visit your profile page
-2. View earned NFT badges and credentials
-3. Click "Verify on Blockchain" to see transaction details
-4. Share credentials publicly via the verification link
+```
+1. Visit your profile
+2. View earned NFT badges
+3. Click "Verify on Blockchain"
+4. Share verification link
+```
 
-### 5. Service Navigator
-1. Open the Service Navigator
-2. Use voice search: "Find health services near me"
-3. View services with distance, ratings, and contact info
-4. Toggle low-data mode for optimized experience
+### 5. Agriculture Dashboard
+```
+1. View farm profile and crops
+2. Check weather forecast
+3. Monitor market prices
+4. Review crop health analysis
+```
 
-### 6. Spirit Trails Map
-1. Navigate to the Interactive Map
-2. See animated "spirit trails" connecting nearby users
-3. Click on glowing event beacons
-4. Try AR mode on supported devices
+### 6. Wellbeing Dashboard
+```
+1. View wellbeing score and trends
+2. Complete a check-in
+3. Browse mental health resources
+4. Connect with peer support
+```
 
-### 7. Metrics Dashboard
-1. Access the Admin Dashboard
-2. View real-time platform statistics
-3. Explore geographic distribution maps
-4. See impact calculations and engagement metrics
+### 7. Service Navigator
+```
+1. Search for services by voice
+2. View distance and ratings
+3. Access contact information
+4. Toggle low-data mode
+```
 
-## 📚 Documentation
-
-### Quick Start Guides
-- **[Judges' Quick Reference](JUDGES_QUICK_REFERENCE.md)** - ⚡ 5-minute overview for judges
-- **[Demo Walkthrough Guide](DEMO_WALKTHROUGH.md)** - Step-by-step feature demonstration
-- **[Hackathon Submission Package](HACKATHON_SUBMISSION_PACKAGE.md)** - Complete submission materials
-
-### Development & Deployment
-- **[Kiro Development Process](KIRO_WRITEUP.md)** - Spec-driven development methodology
-- **[Vercel Deployment Guide](VERCEL_DEPLOYMENT.md)** - Frontend deployment instructions
-- **[Local Setup Guide](LOCAL_SETUP_GUIDE.md)** - Detailed local development setup
-- **[API Documentation](backend/README.md)** - Backend API reference
-
-### Submission Materials
-- **[Demo Video Script](DEMO_VIDEO_SCRIPT.md)** - 3-minute demo video script
-- **[Submission Checklist](SUBMISSION_CHECKLIST.md)** - Pre-submission verification
-
-### Feature Documentation
-- [Voice Interface Implementation](VOICE_INTERFACE_IMPLEMENTATION.md)
-- [Ethereal Notifications](ETHEREAL_NOTIFICATIONS_IMPLEMENTATION.md)
-- [Gig Board System](GIG_BOARD_IMPLEMENTATION.md)
-- [Blockchain Trust System](BLOCKCHAIN_IMPLEMENTATION_SUMMARY.md)
-- [Service Navigator](SERVICE_NAVIGATOR_IMPLEMENTATION.md)
-- [Spirit Trails](SPIRIT_TRAILS_IMPLEMENTATION.md)
-- [Spirit Avatars](SPIRIT_AVATAR_IMPLEMENTATION.md)
-- [Metrics Dashboard](METRICS_DASHBOARD_IMPLEMENTATION.md)
-- [Accessibility Features](ACCESSIBILITY_IMPLEMENTATION.md)
-- [Edge Case Handling](EDGE_CASE_HANDLING.md)
-
-## 🎯 Hackathon Impact
-
-### Problem Statement
-Rural and regional Australians face unique challenges:
-- **Social Isolation**: Limited community connections
-- **Service Access**: Difficulty finding essential services
-- **Economic Opportunity**: Limited job prospects
-- **Digital Divide**: Poor connectivity and digital literacy barriers
-
-### Our Solution
-Rural Connect AI addresses these challenges through:
-1. **Voice-First Design**: Accessible for users with limited literacy or hands-free needs
-2. **Offline Capability**: Works in areas with poor connectivity
-3. **AI-Powered Matching**: Connects people with opportunities and services
-4. **Trust System**: Blockchain-verified credentials build community trust
-5. **Immersive UX**: Engaging design encourages platform adoption
-
-### Measurable Impact
-- **Connections Made**: AI matching facilitates meaningful community connections
-- **Jobs Created**: Gig board enables micro-employment opportunities
-- **Services Accessed**: Navigator simplifies finding essential services
-- **Time Saved**: Voice interface and smart search reduce friction
-- **Trust Built**: Blockchain credentials create transparent reputation
-
-## 🏗️ Built with Kiro
-
-This project was developed using **Kiro's spec-driven development methodology**:
-
-1. **Requirements Gathering**: EARS-compliant acceptance criteria
-2. **Design Phase**: Comprehensive architecture and correctness properties
-3. **Task Planning**: Incremental implementation with clear milestones
-4. **Iterative Development**: Continuous refinement with user feedback
-
-See [KIRO_WRITEUP.pdf](KIRO_WRITEUP.pdf) for detailed insights into our development process.
+### 8. Metrics Dashboard
+```
+1. View real-time platform statistics
+2. Explore geographic distribution
+3. Check impact calculations
+4. Monitor engagement metrics
+```
 
 ## 🧪 Testing
 
@@ -355,95 +301,180 @@ npm test
 # Run with coverage
 npm run test:coverage
 
-# Run specific test suite
-npm test -- voice
-
-# Run E2E tests
+# Run specific test suites
+npm run test:integration
 npm run test:e2e
+npm run test:accessibility
+npm run test:mobile
+npm run test:performance
+
+# Run all tests (frontend + backend)
+npm run test:all
 ```
 
-### Test Coverage
-- Unit tests for all services and utilities
-- Integration tests for API endpoints
-- Component tests for React components
-- E2E tests for critical user flows
-- Accessibility tests with jest-axe
+## 📚 Available Scripts
 
-## 🌐 Deployment
-
-### Vercel (Frontend)
+### Frontend
 ```bash
-# Install Vercel CLI
-npm i -g vercel
-
-# Deploy
-vercel --prod
+npm run dev          # Start development server
+npm run build        # Build for production
+npm run preview      # Preview production build
+npm run lint         # Run ESLint
+npm test             # Run tests
+npm run test:watch   # Run tests in watch mode
 ```
 
-### Railway/Render (Backend)
+### Backend
 ```bash
-# Connect your repository
-# Set environment variables
-# Deploy automatically on push
+cd backend
+npm run dev          # Start backend server
+npm run build        # Build backend
+npm test             # Run backend tests
+node mock-server.js  # Start mock backend
 ```
 
-See [README-DEPLOYMENT.md](README-DEPLOYMENT.md) for comprehensive deployment instructions.
+## 🌐 API Endpoints
+
+### Agriculture
+- `GET /api/agriculture/dashboard` - Farm dashboard data
+- `POST /api/agriculture/analyze-crop` - Analyze crop health
+- `GET /api/agriculture/weather` - Weather forecast
+- `GET /api/agriculture/market/:farmId` - Market prices
+
+### Wellbeing
+- `GET /api/wellbeing/dashboard` - Wellbeing dashboard
+- `POST /api/wellbeing/checkin` - Submit check-in
+- `GET /api/wellbeing/resources` - Mental health resources
+- `GET /api/wellbeing/support-matches` - Find peer support
+
+### Business
+- `GET /api/business/directory` - Business directory
+- `GET /api/business/:id/analytics` - Business analytics
+- `GET /api/business/opportunities/area` - Economic opportunities
+
+### Gigs
+- `GET /api/v1/gigs` - List all gigs
+- `POST /api/v1/gigs` - Create new gig
+- `POST /api/v1/gigs/:id/apply` - Apply to gig
+
+### Services
+- `GET /api/v1/services` - List services
+- `GET /api/v1/services/search` - Search services
+
+### Blockchain
+- `GET /api/v1/blockchain/credentials` - User credentials
+- `POST /api/v1/blockchain/verify` - Verify credential
+
+### Metrics
+- `GET /api/v1/metrics` - Platform metrics
+- `GET /api/v1/metrics/dashboard` - Detailed analytics
+
+See [backend/README.md](backend/README.md) for complete API documentation.
 
 ## 🔒 Security
 
-- **Authentication**: JWT-based secure authentication
-- **Input Validation**: Comprehensive validation and sanitization
-- **Rate Limiting**: API endpoint protection
-- **HTTPS**: SSL/TLS encryption for all traffic
-- **CORS**: Configured for secure cross-origin requests
-- **Security Headers**: HSTS, CSP, X-Frame-Options
+- **JWT Authentication** with secure token management
+- **Input Validation** and sanitization
+- **Rate Limiting** on API endpoints
+- **HTTPS/TLS** encryption
+- **CORS** configuration
+- **Security Headers** (HSTS, CSP, X-Frame-Options)
+- **Environment Variables** for sensitive data
 
 ## ♿ Accessibility
 
-- **WCAG AAA Compliance**: Meets highest accessibility standards
-- **Screen Reader Support**: Full ARIA labels and semantic HTML
-- **Keyboard Navigation**: All features accessible without mouse
-- **High Contrast Mode**: Enhanced visibility for visual impairments
-- **Adjustable Text Size**: Customizable font sizes
-- **Voice Interface**: Alternative input method for accessibility
-
-## 🌍 Multi-Language Support
-
-- **Translation API**: Google Translate integration
-- **Aboriginal Languages**: Key terms in Indigenous languages
-- **RTL Support**: Right-to-left language compatibility
-- **Language Selector**: Easy language switching
+- **WCAG AAA Compliance** - Highest accessibility standards
+- **Screen Reader Support** - Full ARIA labels
+- **Keyboard Navigation** - All features accessible
+- **High Contrast Mode** - Enhanced visibility
+- **Adjustable Text Size** - Customizable fonts
+- **Voice Interface** - Alternative input method
 
 ## 📱 Mobile Optimization
 
-- **Responsive Design**: Works on all screen sizes
-- **Touch Optimized**: Large touch targets and gestures
-- **Offline First**: Service workers for offline functionality
-- **PWA**: Installable as a progressive web app
-- **Performance**: Optimized for mobile networks
+- **Responsive Design** - Works on all screen sizes
+- **Touch Optimized** - Large touch targets
+- **Offline First** - Service workers
+- **PWA** - Installable progressive web app
+- **Performance** - Optimized for mobile networks
 
-## 🤝 Development Guidelines
+## 🌍 Multi-Language Support
 
-- Follow TypeScript strict mode
-- Use Prettier for code formatting
-- Write tests for components and utilities
-- Follow the established folder structure
-- Use semantic commit messages
-- Document complex logic and APIs
-- Ensure accessibility compliance
+- **Translation API** integration
+- **Aboriginal Languages** support
+- **RTL Support** for right-to-left languages
+- **Language Selector** for easy switching
+
+## 📖 Documentation
+
+### Quick Start Guides
+- [Judges' Quick Reference](JUDGES_QUICK_REFERENCE.md)
+- [Demo Walkthrough](DEMO_WALKTHROUGH.md)
+- [Hackathon Features Test](HACKATHON_FEATURES_TEST.md)
+
+### Development
+- [Local Setup Guide](LOCAL_SETUP_GUIDE.md)
+- [Backend API Documentation](backend/README.md)
+- [Kiro Development Process](KIRO_WRITEUP.md)
+
+### Feature Documentation
+- [Voice Interface](VOICE_INTERFACE_IMPLEMENTATION.md)
+- [Ethereal Notifications](ETHEREAL_NOTIFICATIONS_IMPLEMENTATION.md)
+- [Gig Board](GIG_BOARD_IMPLEMENTATION.md)
+- [Blockchain Trust](BLOCKCHAIN_IMPLEMENTATION_SUMMARY.md)
+- [Service Navigator](SERVICE_NAVIGATOR_IMPLEMENTATION.md)
+- [Spirit Trails](SPIRIT_TRAILS_IMPLEMENTATION.md)
+- [Metrics Dashboard](METRICS_DASHBOARD_IMPLEMENTATION.md)
+- [Accessibility](ACCESSIBILITY_IMPLEMENTATION.md)
+
+### Deployment
+- [Vercel Deployment](VERCEL_DEPLOYMENT.md)
+- [Deployment Guide](README-DEPLOYMENT.md)
+
+## 🎯 Impact & Problem Solving
+
+### Problems Addressed
+- **Social Isolation** - Limited community connections in rural areas
+- **Service Access** - Difficulty finding essential services
+- **Economic Opportunity** - Limited job prospects
+- **Digital Divide** - Poor connectivity and digital literacy barriers
+- **Trust Issues** - Lack of verification in online interactions
+
+### Our Solutions
+1. **Voice-First Design** - Accessible for all literacy levels
+2. **Offline Capability** - Works with poor connectivity
+3. **AI-Powered Matching** - Connects people with opportunities
+4. **Blockchain Trust** - Verifiable credentials and reputation
+5. **Immersive UX** - Engaging design encourages adoption
+
+### Measurable Impact
+- **Connections Made** - AI facilitates meaningful community connections
+- **Jobs Created** - Gig board enables micro-employment
+- **Services Accessed** - Navigator simplifies finding help
+- **Time Saved** - Voice interface reduces friction
+- **Trust Built** - Blockchain creates transparent reputation
+
+## 🏗️ Built with Kiro
+
+This project was developed using **Kiro's spec-driven development methodology**:
+
+1. **Requirements Gathering** - EARS-compliant acceptance criteria
+2. **Design Phase** - Comprehensive architecture and correctness properties
+3. **Task Planning** - Incremental implementation with clear milestones
+4. **Iterative Development** - Continuous refinement with feedback
+
+See [KIRO_WRITEUP.md](KIRO_WRITEUP.md) for detailed insights.
 
 ## 🤝 Contributing
 
-We welcome contributions! Please follow these steps:
+We welcome contributions! Please:
 
 1. Fork the repository
 2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Make your changes
-4. Add tests for new functionality
-5. Run linting and tests (`npm run lint && npm test`)
-6. Commit your changes (`git commit -m 'Add amazing feature'`)
-7. Push to the branch (`git push origin feature/amazing-feature`)
-8. Open a Pull Request
+3. Make your changes with tests
+4. Run linting and tests (`npm run lint && npm test`)
+5. Commit with semantic messages
+6. Push and open a Pull Request
 
 ## 📄 License
 
@@ -451,10 +482,10 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🙏 Acknowledgments
 
-- **Kiro AI**: For the spec-driven development platform
-- **Australian Government**: For open data APIs
-- **Rural Communities**: For inspiring this solution
-- **Open Source Community**: For the amazing tools and libraries
+- **Kiro AI** - For the spec-driven development platform
+- **Australian Government** - For open data APIs
+- **Rural Communities** - For inspiring this solution
+- **Open Source Community** - For amazing tools and libraries
 
 ## 📞 Contact & Support
 
