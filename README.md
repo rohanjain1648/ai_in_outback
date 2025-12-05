@@ -7,21 +7,6 @@
 
 Rural Connect AI addresses critical challenges faced by rural communities including social isolation, limited access to services, economic opportunities, and emergency preparedness. Our platform combines cutting-edge AI, blockchain technology, and voice-first design to create an accessible, trustworthy, and engaging community platform.
 
-## ⚡ Quick Start for Judges
-
-**Want to see the platform with realistic data? Run this one command:**
-
-```bash
-# Windows
-.\setup-demo.ps1
-
-# Mac/Linux
-./setup-demo.sh
-```
-
-Then open [http://localhost:5173](http://localhost:5173) and explore!
-
-📖 **Full demo guide:** See [DEMO_WALKTHROUGH.md](DEMO_WALKTHROUGH.md)
 
 ## ✨ Key Features
 
