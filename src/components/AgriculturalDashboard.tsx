@@ -12,20 +12,17 @@ import MobileAgriculturalDashboard from './mobile/MobileAgriculturalDashboard';
 import { useDeviceDetection } from '../utils/mobileDetection';
 
 const AgriculturalDashboard: React.FC = () => {
+  const deviceInfo = useDeviceDetection();
   const [dashboardData, setDashboardData] = useState<DashboardData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<'overview' | 'crops' | 'market' | 'analysis'>('overview');
-  const deviceInfo = useDeviceDetection();
-
-  // Use mobile-optimized version for mobile devices
-  if (deviceInfo.isMobile) {
-    return <MobileAgriculturalDashboard />;
-  }
 
   useEffect(() => {
-    loadDashboardData();
-  }, []);
+    if (!deviceInfo.isMobile) {
+      loadDashboardData();
+    }
+  }, [deviceInfo.isMobile]);
 
   const loadDashboardData = async () => {
     try {
@@ -83,6 +80,11 @@ const AgriculturalDashboard: React.FC = () => {
     );
   }
 
+  // Use mobile-optimized version for mobile devices
+  if (deviceInfo.isMobile) {
+    return <MobileAgriculturalDashboard />;
+  }
+
   if (!dashboardData) {
     return null;
   }
@@ -123,11 +125,10 @@ const AgriculturalDashboard: React.FC = () => {
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id as any)}
-                className={`flex items-center space-x-2 px-4 py-2 rounded-md transition-all ${
-                  activeTab === tab.id
-                    ? 'bg-green-500 text-white shadow-md'
-                    : 'text-gray-600 hover:bg-gray-100'
-                }`}
+                className={`flex items-center space-x-2 px-4 py-2 rounded-md transition-all ${activeTab === tab.id
+                  ? 'bg-green-500 text-white shadow-md'
+                  : 'text-gray-600 hover:bg-gray-100'
+                  }`}
               >
                 <span>{tab.icon}</span>
                 <span className="font-medium">{tab.label}</span>
@@ -146,36 +147,36 @@ const AgriculturalDashboard: React.FC = () => {
           {activeTab === 'overview' && (
             <div className="space-y-8">
               <FarmSummaryCards summary={dashboardData.summary} />
-              
+
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 <WeatherWidget weather={dashboardData.weather} />
                 <RecommendationsPanel recommendations={dashboardData.recommendations} />
               </div>
-              
-              <MarketPricesWidget 
-                prices={dashboardData.marketPrices} 
-                alerts={dashboardData.marketAlerts} 
+
+              <MarketPricesWidget
+                prices={dashboardData.marketPrices}
+                alerts={dashboardData.marketAlerts}
               />
             </div>
           )}
 
           {activeTab === 'crops' && (
-            <CropHealthOverview 
+            <CropHealthOverview
               crops={dashboardData.farm.crops}
               recentAnalyses={dashboardData.recentAnalyses}
             />
           )}
 
           {activeTab === 'market' && (
-            <MarketPricesWidget 
-              prices={dashboardData.marketPrices} 
+            <MarketPricesWidget
+              prices={dashboardData.marketPrices}
               alerts={dashboardData.marketAlerts}
               detailed={true}
             />
           )}
 
           {activeTab === 'analysis' && (
-            <CropAnalysisUpload 
+            <CropAnalysisUpload
               farmId={dashboardData.farm._id}
               crops={dashboardData.farm.crops}
               onAnalysisComplete={handleCropAnalysisComplete}

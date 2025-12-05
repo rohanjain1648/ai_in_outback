@@ -30,8 +30,9 @@ export const AccessibilityButton: React.FC = () => {
                 className="fixed bottom-6 right-6 z-30 p-4 bg-blue-600 text-white rounded-full shadow-lg hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300 transition-colors"
                 aria-label="Open accessibility settings (Alt + A)"
                 title="Accessibility Settings"
+                style={{ color: 'white' }}
             >
-                <Settings className="w-6 h-6" aria-hidden="true" />
+                <Settings className="w-6 h-6 text-white" aria-hidden="true" />
             </motion.button>
 
             <AccessibilityPanel isOpen={isPanelOpen} onClose={() => setIsPanelOpen(false)} />

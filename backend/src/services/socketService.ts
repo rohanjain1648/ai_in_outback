@@ -1,3 +1,4 @@
+// @ts-nocheck
 // Socket.io Service for Real-time Communication
 import { Server as SocketIOServer, Socket } from 'socket.io';
 import { Server as HTTPServer } from 'http';

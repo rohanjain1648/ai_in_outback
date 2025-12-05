@@ -142,10 +142,10 @@ export const AccessibilityPanel: React.FC<AccessibilityPanelProps> = ({ isOpen, 
                                 <div role="tabpanel" id="visual-panel" aria-labelledby="visual-tab">
                                     {/* High Contrast Mode */}
                                     <section aria-labelledby="contrast-heading">
-                                        <h3 id="contrast-heading" className="text-lg font-semibold mb-3">
+                                        <h3 id="contrast-heading" className="text-lg font-semibold mb-3 text-gray-900 dark:text-white">
                                             High Contrast Mode
                                         </h3>
-                                        <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
+                                        <p className="text-sm text-gray-700 dark:text-gray-300 mb-3">
                                             Increase contrast for better visibility (WCAG AAA compliant)
                                         </p>
                                         <button
@@ -157,7 +157,7 @@ export const AccessibilityPanel: React.FC<AccessibilityPanelProps> = ({ isOpen, 
                                             aria-pressed={settings.highContrastMode}
                                         >
                                             <div className="flex items-center justify-between">
-                                                <span className="font-medium">
+                                                <span className="font-medium text-gray-900 dark:text-white">
                                                     {settings.highContrastMode ? 'Enabled' : 'Disabled'}
                                                 </span>
                                                 {settings.highContrastMode && (
@@ -169,10 +169,10 @@ export const AccessibilityPanel: React.FC<AccessibilityPanelProps> = ({ isOpen, 
 
                                     {/* Text Size */}
                                     <section aria-labelledby="text-size-heading" className="mt-6">
-                                        <h3 id="text-size-heading" className="text-lg font-semibold mb-3">
+                                        <h3 id="text-size-heading" className="text-lg font-semibold mb-3 text-gray-900 dark:text-white">
                                             Text Size
                                         </h3>
-                                        <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
+                                        <p className="text-sm text-gray-700 dark:text-gray-300 mb-3">
                                             Adjust text size for comfortable reading
                                         </p>
                                         <div
@@ -193,8 +193,8 @@ export const AccessibilityPanel: React.FC<AccessibilityPanelProps> = ({ isOpen, 
                                                 >
                                                     <div className="flex items-center justify-between">
                                                         <div>
-                                                            <div className="font-medium">{option.label}</div>
-                                                            <div className="text-sm text-gray-600 dark:text-gray-400">
+                                                            <div className="font-medium text-gray-900 dark:text-white">{option.label}</div>
+                                                            <div className="text-sm text-gray-700 dark:text-gray-300">
                                                                 {option.description}
                                                             </div>
                                                         </div>
@@ -209,10 +209,10 @@ export const AccessibilityPanel: React.FC<AccessibilityPanelProps> = ({ isOpen, 
 
                                     {/* Reduced Motion */}
                                     <section aria-labelledby="motion-heading" className="mt-6">
-                                        <h3 id="motion-heading" className="text-lg font-semibold mb-3">
+                                        <h3 id="motion-heading" className="text-lg font-semibold mb-3 text-gray-900 dark:text-white">
                                             Reduced Motion
                                         </h3>
-                                        <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
+                                        <p className="text-sm text-gray-700 dark:text-gray-300 mb-3">
                                             Minimize animations and transitions
                                         </p>
                                         <button
@@ -226,7 +226,7 @@ export const AccessibilityPanel: React.FC<AccessibilityPanelProps> = ({ isOpen, 
                                             aria-pressed={settings.reducedMotion}
                                         >
                                             <div className="flex items-center justify-between">
-                                                <span className="font-medium">
+                                                <span className="font-medium text-gray-900 dark:text-white">
                                                     {settings.reducedMotion ? 'Enabled' : 'Disabled'}
                                                 </span>
                                                 {settings.reducedMotion && (
@@ -242,10 +242,10 @@ export const AccessibilityPanel: React.FC<AccessibilityPanelProps> = ({ isOpen, 
                             {activeTab === 'language' && (
                                 <div role="tabpanel" id="language-panel" aria-labelledby="language-tab">
                                     <section aria-labelledby="language-heading">
-                                        <h3 id="language-heading" className="text-lg font-semibold mb-3">
+                                        <h3 id="language-heading" className="text-lg font-semibold mb-3 text-gray-900 dark:text-white">
                                             Select Language
                                         </h3>
-                                        <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
+                                        <p className="text-sm text-gray-700 dark:text-gray-300 mb-3">
                                             Choose your preferred language for the interface
                                         </p>
                                         <div
@@ -266,8 +266,8 @@ export const AccessibilityPanel: React.FC<AccessibilityPanelProps> = ({ isOpen, 
                                                 >
                                                     <div className="flex items-center justify-between">
                                                         <div>
-                                                            <div className="font-medium">{option.label}</div>
-                                                            <div className="text-sm text-gray-600 dark:text-gray-400">
+                                                            <div className="font-medium text-gray-900 dark:text-white">{option.label}</div>
+                                                            <div className="text-sm text-gray-700 dark:text-gray-300">
                                                                 {option.nativeName}
                                                             </div>
                                                         </div>
@@ -301,10 +301,10 @@ export const AccessibilityPanel: React.FC<AccessibilityPanelProps> = ({ isOpen, 
                                 <div role="tabpanel" id="navigation-panel" aria-labelledby="navigation-tab">
                                     {/* Screen Reader Optimization */}
                                     <section aria-labelledby="screen-reader-heading">
-                                        <h3 id="screen-reader-heading" className="text-lg font-semibold mb-3">
+                                        <h3 id="screen-reader-heading" className="text-lg font-semibold mb-3 text-gray-900 dark:text-white">
                                             Screen Reader Optimization
                                         </h3>
-                                        <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
+                                        <p className="text-sm text-gray-700 dark:text-gray-300 mb-3">
                                             Optimize interface for screen reader users
                                         </p>
                                         <button
@@ -320,7 +320,7 @@ export const AccessibilityPanel: React.FC<AccessibilityPanelProps> = ({ isOpen, 
                                             aria-pressed={settings.screenReaderOptimized}
                                         >
                                             <div className="flex items-center justify-between">
-                                                <span className="font-medium">
+                                                <span className="font-medium text-gray-900 dark:text-white">
                                                     {settings.screenReaderOptimized ? 'Enabled' : 'Disabled'}
                                                 </span>
                                                 {settings.screenReaderOptimized && (
@@ -332,10 +332,10 @@ export const AccessibilityPanel: React.FC<AccessibilityPanelProps> = ({ isOpen, 
 
                                     {/* Keyboard Navigation */}
                                     <section aria-labelledby="keyboard-heading" className="mt-6">
-                                        <h3 id="keyboard-heading" className="text-lg font-semibold mb-3">
+                                        <h3 id="keyboard-heading" className="text-lg font-semibold mb-3 text-gray-900 dark:text-white">
                                             Keyboard Navigation
                                         </h3>
-                                        <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
+                                        <p className="text-sm text-gray-700 dark:text-gray-300 mb-3">
                                             Enable enhanced keyboard navigation shortcuts
                                         </p>
                                         <button
@@ -351,7 +351,7 @@ export const AccessibilityPanel: React.FC<AccessibilityPanelProps> = ({ isOpen, 
                                             aria-pressed={settings.keyboardNavigationEnabled}
                                         >
                                             <div className="flex items-center justify-between">
-                                                <span className="font-medium">
+                                                <span className="font-medium text-gray-900 dark:text-white">
                                                     {settings.keyboardNavigationEnabled ? 'Enabled' : 'Disabled'}
                                                 </span>
                                                 {settings.keyboardNavigationEnabled && (
@@ -363,7 +363,7 @@ export const AccessibilityPanel: React.FC<AccessibilityPanelProps> = ({ isOpen, 
 
                                     {/* Keyboard Shortcuts Reference */}
                                     <section aria-labelledby="shortcuts-heading" className="mt-6">
-                                        <h3 id="shortcuts-heading" className="text-lg font-semibold mb-3">
+                                        <h3 id="shortcuts-heading" className="text-lg font-semibold mb-3 text-gray-900 dark:text-white">
                                             Keyboard Shortcuts
                                         </h3>
                                         <div className="space-y-2 text-sm">
@@ -396,7 +396,7 @@ export const AccessibilityPanel: React.FC<AccessibilityPanelProps> = ({ isOpen, 
 
                                     {/* Sound Settings */}
                                     <section aria-labelledby="sound-heading" className="mt-6">
-                                        <h3 id="sound-heading" className="text-lg font-semibold mb-3">
+                                        <h3 id="sound-heading" className="text-lg font-semibold mb-3 text-gray-900 dark:text-white">
                                             Sound & Voice
                                         </h3>
                                         <div className="space-y-3">
@@ -410,8 +410,8 @@ export const AccessibilityPanel: React.FC<AccessibilityPanelProps> = ({ isOpen, 
                                             >
                                                 <div className="flex items-center justify-between">
                                                     <div className="flex items-center gap-2">
-                                                        <Volume2 className="w-5 h-5" aria-hidden="true" />
-                                                        <span className="font-medium">Sound Effects</span>
+                                                        <Volume2 className="w-5 h-5 text-gray-900 dark:text-white" aria-hidden="true" />
+                                                        <span className="font-medium text-gray-900 dark:text-white">Sound Effects</span>
                                                     </div>
                                                     {settings.soundEnabled && (
                                                         <Check className="w-5 h-5 text-blue-600" aria-hidden="true" />
@@ -429,8 +429,8 @@ export const AccessibilityPanel: React.FC<AccessibilityPanelProps> = ({ isOpen, 
                                             >
                                                 <div className="flex items-center justify-between">
                                                     <div className="flex items-center gap-2">
-                                                        <Volume2 className="w-5 h-5" aria-hidden="true" />
-                                                        <span className="font-medium">Voice Feedback</span>
+                                                        <Volume2 className="w-5 h-5 text-gray-900 dark:text-white" aria-hidden="true" />
+                                                        <span className="font-medium text-gray-900 dark:text-white">Voice Feedback</span>
                                                     </div>
                                                     {settings.voiceEnabled && (
                                                         <Check className="w-5 h-5 text-blue-600" aria-hidden="true" />

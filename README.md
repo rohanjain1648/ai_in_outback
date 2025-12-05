@@ -8,6 +8,22 @@
 
 An intelligent community platform designed specifically for regional and rural Australia. The platform addresses critical challenges faced by rural communities including social isolation, limited access to services, economic opportunities, and emergency preparedness.
 
+## 🎬 **HACKATHON JUDGES: Quick Demo Setup**
+
+**Want to see the platform with realistic data? Run this one command:**
+
+```bash
+# Windows
+.\setup-demo.ps1
+
+# Mac/Linux
+./setup-demo.sh
+```
+
+Then login with: **sarah@demo.com** / **demo123**
+
+📖 **Full demo guide:** See [README_DEMO.md](README_DEMO.md) or [DEMO_PACKAGE_COMPLETE.md](DEMO_PACKAGE_COMPLETE.md)
+
 ## 🎯 Hackathon Features
 
 ### 🎤 Voice-First Interface

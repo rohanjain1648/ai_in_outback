@@ -58,6 +58,9 @@ router.use(`${API_VERSION}/skills`, skillsRoutes);
 // Mental health and wellbeing routes
 router.use(`${API_VERSION}/wellbeing`, wellbeingRoutes);
 
+// Chat and messaging routes
+router.use(`${API_VERSION}/chat`, chatRoutes);
+
 // Gig economy micro-job routes
 router.use(`${API_VERSION}/gigs`, gigsRoutes);
 
@@ -88,6 +91,7 @@ router.get(`${API_VERSION}`, (req, res) => {
       culture: `${API_VERSION}/culture`,
       skills: `${API_VERSION}/skills`,
       wellbeing: `${API_VERSION}/wellbeing`,
+      chat: `${API_VERSION}/chat`,
       gigs: `${API_VERSION}/gigs`,
       services: `${API_VERSION}/services`,
       blockchain: `${API_VERSION}/blockchain`,
