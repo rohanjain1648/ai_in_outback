@@ -14,6 +14,8 @@ import healthRoutes from './health';
 import chatRoutes from './chat';
 import gigsRoutes from './gigs';
 import servicesRoutes from './services';
+import blockchainRoutes from './blockchain';
+import avatarsRoutes from './avatars';
 
 const router = Router();
 
@@ -62,6 +64,12 @@ router.use(`${API_VERSION}/gigs`, gigsRoutes);
 // Service directory routes
 router.use(`${API_VERSION}/services`, servicesRoutes);
 
+// Blockchain trust and credentials routes
+router.use(`${API_VERSION}/blockchain`, blockchainRoutes);
+
+// Spirit avatar generation routes
+router.use(`${API_VERSION}/avatars`, avatarsRoutes);
+
 // API documentation route
 router.get(`${API_VERSION}`, (req, res) => {
   res.json({
@@ -82,6 +90,8 @@ router.get(`${API_VERSION}`, (req, res) => {
       wellbeing: `${API_VERSION}/wellbeing`,
       gigs: `${API_VERSION}/gigs`,
       services: `${API_VERSION}/services`,
+      blockchain: `${API_VERSION}/blockchain`,
+      avatars: `${API_VERSION}/avatars`,
     },
     documentation: 'https://docs.ruralconnectai.com',
   });

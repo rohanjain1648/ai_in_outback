@@ -1,0 +1,375 @@
+/* Accessibility Styles */
+
+/* Screen Reader Only - visible to screen readers but hidden visually */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}
+
+.sr-only:focus,
+.sr-only:active {
+    position: static;
+    width: auto;
+    height: auto;
+    overflow: visible;
+    clip: auto;
+    white-space: normal;
+}
+
+/* Text Size Variations */
+:root[data-text-size='small'] {
+    font-size: 14px;
+}
+
+:root[data-text-size='medium'] {
+    font-size: 16px;
+}
+
+:root[data-text-size='large'] {
+    font-size: 18px;
+}
+
+:root[data-text-size='extra-large'] {
+    font-size: 20px;
+}
+
+/* High Contrast Mode - WCAG AAA Compliant */
+.high-contrast {
+    /* Background and text colors */
+    --bg-primary: #000000;
+    --bg-secondary: #1a1a1a;
+    --text-primary: #ffffff;
+    --text-secondary: #e0e0e0;
+
+    /* Interactive elements */
+    --color-primary: #4da6ff;
+    --color-primary-hover: #66b3ff;
+    --color-secondary: #ffcc00;
+    --color-danger: #ff4d4d;
+    --color-success: #4dff4d;
+    --color-warning: #ffaa00;
+
+    /* Borders */
+    --border-color: #ffffff;
+    --border-color-subtle: #666666;
+}
+
+.high-contrast body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+}
+
+.high-contrast .bg-white,
+.high-contrast .dark\:bg-gray-900 {
+    background-color: var(--bg-primary) !important;
+}
+
+.high-contrast .bg-gray-50,
+.high-contrast .bg-gray-100,
+.high-contrast .dark\:bg-gray-800 {
+    background-color: var(--bg-secondary) !important;
+}
+
+.high-contrast .text-gray-600,
+.high-contrast .text-gray-700,
+.high-contrast .text-gray-800,
+.high-contrast .text-gray-900,
+.high-contrast .dark\:text-gray-400,
+.high-contrast .dark\:text-gray-300,
+.high-contrast .dark\:text-gray-200 {
+    color: var(--text-primary) !important;
+}
+
+.high-contrast .text-gray-400,
+.high-contrast .text-gray-500 {
+    color: var(--text-secondary) !important;
+}
+
+.high-contrast .border,
+.high-contrast .border-gray-200,
+.high-contrast .border-gray-300,
+.high-contrast .dark\:border-gray-700,
+.high-contrast .dark\:border-gray-600 {
+    border-color: var(--border-color) !important;
+    border-width: 2px !important;
+}
+
+.high-contrast a,
+.high-contrast .text-blue-600,
+.high-contrast .text-blue-500 {
+    color: var(--color-primary) !important;
+    text-decoration: underline;
+}
+
+.high-contrast a:hover,
+.high-contrast a:focus {
+    color: var(--color-primary-hover) !important;
+    text-decoration: underline;
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+.high-contrast button,
+.high-contrast .btn {
+    border: 2px solid var(--border-color) !important;
+    font-weight: 600;
+}
+
+.high-contrast button:focus,
+.high-contrast .btn:focus,
+.high-contrast input:focus,
+.high-contrast select:focus,
+.high-contrast textarea:focus {
+    outline: 3px solid var(--color-primary) !important;
+    outline-offset: 2px;
+}
+
+.high-contrast .bg-blue-600,
+.high-contrast .bg-blue-500 {
+    background-color: var(--color-primary) !important;
+    color: #000000 !important;
+}
+
+.high-contrast .bg-red-600,
+.high-contrast .bg-red-500 {
+    background-color: var(--color-danger) !important;
+    color: #000000 !important;
+}
+
+.high-contrast .bg-green-600,
+.high-contrast .bg-green-500 {
+    background-color: var(--color-success) !important;
+    color: #000000 !important;
+}
+
+.high-contrast .bg-yellow-600,
+.high-contrast .bg-yellow-500 {
+    background-color: var(--color-warning) !important;
+    color: #000000 !important;
+}
+
+/* Ensure sufficient contrast for shadows */
+.high-contrast .shadow,
+.high-contrast .shadow-lg,
+.high-contrast .shadow-xl {
+    box-shadow: 0 0 0 2px var(--border-color) !important;
+}
+
+/* Reduced Motion */
+.reduce-motion *,
+.reduce-motion *::before,
+.reduce-motion *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+}
+
+/* Focus Visible - Enhanced focus indicators */
+:focus-visible {
+    outline: 3px solid #4da6ff;
+    outline-offset: 2px;
+}
+
+.high-contrast :focus-visible {
+    outline: 3px solid var(--color-primary);
+    outline-offset: 3px;
+}
+
+/* Keyboard Navigation Indicators */
+.keyboard-nav *:focus {
+    outline: 2px solid #4da6ff;
+    outline-offset: 2px;
+}
+
+/* Skip Links */
+.skip-link {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    background: #4da6ff;
+    color: white;
+    padding: 8px 16px;
+    text-decoration: none;
+    border-radius: 0 0 4px 0;
+    z-index: 100;
+}
+
+.skip-link:focus {
+    top: 0;
+}
+
+/* Ensure interactive elements are keyboard accessible */
+[role='button'],
+[role='link'],
+[role='menuitem'],
+[role='tab'] {
+    cursor: pointer;
+}
+
+[role='button']:not([tabindex]),
+[role='link']:not([tabindex]),
+[role='menuitem']:not([tabindex]),
+[role='tab']:not([tabindex]) {
+    tabindex: 0;
+}
+
+/* ARIA Live Regions */
+[aria-live='polite'],
+[aria-live='assertive'] {
+    position: relative;
+}
+
+/* Improve readability */
+.high-contrast p,
+.high-contrast li,
+.high-contrast td,
+.high-contrast th {
+    line-height: 1.6;
+}
+
+/* Ensure form labels are clearly associated */
+label {
+    display: block;
+    margin-bottom: 0.25rem;
+    font-weight: 500;
+}
+
+/* Required field indicator */
+.required::after,
+[aria-required='true']::after {
+    content: ' *';
+    color: #ff4d4d;
+}
+
+.high-contrast .required::after,
+.high-contrast [aria-required='true']::after {
+    color: var(--color-danger);
+}
+
+/* Error messages */
+[role='alert'],
+.error-message {
+    color: #dc2626;
+    font-weight: 500;
+    margin-top: 0.25rem;
+}
+
+.high-contrast [role='alert'],
+.high-contrast .error-message {
+    color: var(--color-danger);
+    border: 2px solid var(--color-danger);
+    padding: 0.5rem;
+    background-color: var(--bg-secondary);
+}
+
+/* Loading states */
+[aria-busy='true'] {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+/* Disabled states */
+[disabled],
+[aria-disabled='true'] {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.high-contrast [disabled],
+.high-contrast [aria-disabled='true'] {
+    opacity: 0.7;
+    border-style: dashed !important;
+}
+
+/* Tooltips and help text */
+[role='tooltip'] {
+    background: #1f2937;
+    color: white;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.375rem;
+    font-size: 0.875rem;
+    max-width: 250px;
+}
+
+.high-contrast [role='tooltip'] {
+    background: var(--bg-secondary);
+    border: 2px solid var(--border-color);
+}
+
+/* Modal and dialog accessibility */
+[role='dialog'],
+[role='alertdialog'] {
+    position: fixed;
+    z-index: 50;
+}
+
+[aria-modal='true'] {
+    /* Ensure modals trap focus */
+    isolation: isolate;
+}
+
+/* Breadcrumb navigation */
+[aria-label='Breadcrumb'] ol {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+/* Pagination */
+[aria-label='Pagination'] {
+    display: flex;
+    gap: 0.25rem;
+}
+
+/* Tables */
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th {
+    text-align: left;
+    font-weight: 600;
+}
+
+.high-contrast table,
+.high-contrast th,
+.high-contrast td {
+    border: 2px solid var(--border-color);
+}
+
+/* Ensure sufficient spacing for touch targets */
+@media (pointer: coarse) {
+
+    button,
+    a,
+    input,
+    select,
+    textarea {
+        min-height: 44px;
+        min-width: 44px;
+    }
+}
+
+/* Print styles for accessibility */
+@media print {
+
+    .skip-link,
+    [aria-hidden='true'],
+    .sr-only {
+        display: none !important;
+    }
+
+    a[href]::after {
+        content: ' (' attr(href) ')';
+    }
+}

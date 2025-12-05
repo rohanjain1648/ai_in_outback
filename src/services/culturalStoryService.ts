@@ -1,4 +1,4 @@
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:3001/api';
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001/api';
 
 export interface CreateStoryData {
   title: string;
@@ -122,7 +122,7 @@ class CulturalStoryService {
     options: RequestInit = {}
   ): Promise<T> {
     const token = localStorage.getItem('authToken');
-    
+
     const config: RequestInit = {
       headers: {
         'Content-Type': 'application/json',
@@ -133,7 +133,7 @@ class CulturalStoryService {
     };
 
     const response = await fetch(`${API_BASE_URL}${endpoint}`, config);
-    
+
     if (!response.ok) {
       const error = await response.json().catch(() => ({ message: 'Network error' }));
       throw new Error(error.message || `HTTP error! status: ${response.status}`);
@@ -158,17 +158,17 @@ class CulturalStoryService {
     if (filters.author) params.append('author', filters.author);
     if (filters.status) params.append('status', filters.status);
     if (filters.culturalSignificance) params.append('culturalSignificance', filters.culturalSignificance);
-    
+
     if (filters.tags && filters.tags.length > 0) {
       filters.tags.forEach(tag => params.append('tags', tag));
     }
-    
+
     if (filters.location) {
       params.append('lat', filters.location.coordinates[1].toString());
       params.append('lng', filters.location.coordinates[0].toString());
       params.append('radius', filters.location.radius.toString());
     }
-    
+
     if (filters.dateRange) {
       params.append('startDate', filters.dateRange.start.toISOString());
       params.append('endDate', filters.dateRange.end.toISOString());
@@ -177,7 +177,7 @@ class CulturalStoryService {
     const response = await this.request<{ success: boolean; data: StoriesResponse }>(
       `/culture/stories?${params.toString()}`
     );
-    
+
     return response.data;
   }
 
@@ -185,7 +185,7 @@ class CulturalStoryService {
     const response = await this.request<{ success: boolean; data: CulturalStory }>(
       `/culture/stories/${storyId}`
     );
-    
+
     return response.data;
   }
 
@@ -197,7 +197,7 @@ class CulturalStoryService {
         body: JSON.stringify(storyData),
       }
     );
-    
+
     return response.data;
   }
 
@@ -209,17 +209,17 @@ class CulturalStoryService {
         body: JSON.stringify(storyData),
       }
     );
-    
+
     return response.data;
   }
 
   async uploadMedia(storyId: string, files: File[], captions: string[] = []): Promise<MediaItem[]> {
     const formData = new FormData();
-    
+
     files.forEach((file, index) => {
       formData.append('media', file);
     });
-    
+
     if (captions.length > 0) {
       formData.append('captions', JSON.stringify(captions));
     }
@@ -264,7 +264,7 @@ class CulturalStoryService {
     const response = await this.request<{ success: boolean; data: StoriesResponse }>(
       `/culture/search?${params.toString()}`
     );
-    
+
     return response.data;
   }
 
@@ -272,19 +272,19 @@ class CulturalStoryService {
     const response = await this.request<{ success: boolean; data: CulturalStory[] }>(
       `/culture/recommendations?limit=${limit}`
     );
-    
+
     return response.data;
   }
 
   async likeStory(storyId: string): Promise<{ story: CulturalStory; isLiked: boolean }> {
-    const response = await this.request<{ 
-      success: boolean; 
-      data: { story: CulturalStory; isLiked: boolean } 
+    const response = await this.request<{
+      success: boolean;
+      data: { story: CulturalStory; isLiked: boolean }
     }>(
       `/culture/stories/${storyId}/like`,
       { method: 'POST' }
     );
-    
+
     return response.data;
   }
 
@@ -296,7 +296,7 @@ class CulturalStoryService {
         body: JSON.stringify({ content }),
       }
     );
-    
+
     return response.data;
   }
 
@@ -316,7 +316,7 @@ class CulturalStoryService {
         body: JSON.stringify(connection),
       }
     );
-    
+
     return response.data;
   }
 
@@ -324,7 +324,7 @@ class CulturalStoryService {
     const response = await this.request<{ success: boolean; data: string[] }>(
       '/culture/tags/popular'
     );
-    
+
     return response.data;
   }
 
@@ -334,8 +334,8 @@ class CulturalStoryService {
     storiesByRegion: Record<string, number>;
     topTags: Array<{ tag: string; count: number }>;
   }> {
-    const response = await this.request<{ 
-      success: boolean; 
+    const response = await this.request<{
+      success: boolean;
       data: {
         totalStories: number;
         storiesByCategory: Record<string, number>;
@@ -343,7 +343,7 @@ class CulturalStoryService {
         topTags: Array<{ tag: string; count: number }>;
       }
     }>('/culture/stats');
-    
+
     return response.data;
   }
 
@@ -405,49 +405,49 @@ class CulturalStoryService {
       .replace(/[^\w\s]/g, '')
       .split(/\s+/)
       .filter(word => word.length > 3);
-    
+
     const wordCount: Record<string, number> = {};
     words.forEach(word => {
       wordCount[word] = (wordCount[word] || 0) + 1;
     });
-    
+
     return Object.entries(wordCount)
-      .sort(([,a], [,b]) => b - a)
+      .sort(([, a], [, b]) => b - a)
       .slice(0, limit)
       .map(([word]) => word);
   }
 
   validateStoryData(data: CreateStoryData): { isValid: boolean; errors: string[] } {
     const errors: string[] = [];
-    
+
     if (!data.title || data.title.trim().length < 3) {
       errors.push('Title must be at least 3 characters long');
     }
-    
+
     if (!data.content || data.content.trim().length < 50) {
       errors.push('Story content must be at least 50 characters long');
     }
-    
+
     if (!data.location.region || data.location.region.trim().length < 2) {
       errors.push('Region is required');
     }
-    
+
     if (!data.location.coordinates || data.location.coordinates.length !== 2) {
       errors.push('Valid coordinates are required');
     }
-    
+
     if (data.tags.length > 20) {
       errors.push('Cannot have more than 20 tags');
     }
-    
+
     if (data.relatedPeople && data.relatedPeople.length > 50) {
       errors.push('Cannot have more than 50 related people');
     }
-    
+
     if (data.relatedEvents && data.relatedEvents.length > 20) {
       errors.push('Cannot have more than 20 related events');
     }
-    
+
     return {
       isValid: errors.length === 0,
       errors

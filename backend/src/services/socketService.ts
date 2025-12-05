@@ -92,7 +92,7 @@ class SocketService {
 
     this.io.on('connection', (socket: AuthenticatedSocket) => {
       console.log(`User connected: ${socket.id}, User ID: ${socket.userId}`);
-      
+
       if (socket.userId) {
         this.handleUserConnection(socket);
         this.setupSocketEventHandlers(socket);
@@ -103,14 +103,14 @@ class SocketService {
   private async authenticateSocket(socket: AuthenticatedSocket, next: (err?: Error) => void): Promise<void> {
     try {
       const token = socket.handshake.auth.token || socket.handshake.headers.authorization?.replace('Bearer ', '');
-      
+
       if (!token) {
         return next(new Error('Authentication token required'));
       }
 
       const decoded = jwt.verify(token, config.jwt.secret) as any;
       const user = await User.findById(decoded.userId).select('-password');
-      
+
       if (!user) {
         return next(new Error('User not found'));
       }
@@ -319,14 +319,14 @@ class SocketService {
     // Update message reactions in Redis
     const messageKey = `message:${data.messageId}`;
     const message = await redisClient.get(messageKey);
-    
+
     if (message) {
       const parsedMessage: ChatMessage = JSON.parse(message);
-      
+
       if (action === 'add') {
         parsedMessage.reactions = parsedMessage.reactions || [];
         const existingReaction = parsedMessage.reactions.find(r => r.userId === userId && r.emoji === data.emoji);
-        
+
         if (!existingReaction) {
           parsedMessage.reactions.push({
             emoji: data.emoji,
@@ -335,7 +335,7 @@ class SocketService {
           });
         }
       } else {
-        parsedMessage.reactions = parsedMessage.reactions?.filter(r => 
+        parsedMessage.reactions = parsedMessage.reactions?.filter(r =>
           !(r.userId === userId && r.emoji === data.emoji)
         ) || [];
       }
@@ -354,7 +354,7 @@ class SocketService {
   private updateUserStatus(socket: AuthenticatedSocket, status: 'online' | 'away' | 'busy'): void {
     const userId = socket.userId!;
     const socketUser = this.connectedUsers.get(socket.id);
-    
+
     if (socketUser) {
       socketUser.status = status;
       socketUser.lastSeen = new Date();
@@ -368,7 +368,7 @@ class SocketService {
   private updateUserLocation(socket: AuthenticatedSocket, location: { latitude: number; longitude: number }): void {
     const userId = socket.userId!;
     const socketUser = this.connectedUsers.get(socket.id);
-    
+
     if (socketUser) {
       // Leave old location room
       if (socketUser.location?.coordinates) {
@@ -392,7 +392,7 @@ class SocketService {
 
   private handleWebRTCSignaling(socket: AuthenticatedSocket, type: string, data: any): void {
     const userId = socket.userId!;
-    
+
     this.io.to(`user:${data.recipientId}`).emit(`webrtc:${type}`, {
       ...data,
       senderId: userId
@@ -401,14 +401,14 @@ class SocketService {
 
   private handleUserDisconnection(socket: AuthenticatedSocket): void {
     const userId = socket.userId!;
-    
+
     // Remove from connected users
     this.connectedUsers.delete(socket.id);
 
     // Update user sockets tracking
     const userSocketIds = this.userSockets.get(userId) || [];
     const updatedSocketIds = userSocketIds.filter(id => id !== socket.id);
-    
+
     if (updatedSocketIds.length === 0) {
       // User is completely offline
       this.userSockets.delete(userId);
@@ -424,7 +424,7 @@ class SocketService {
   // Public methods for external services
   public async sendNotificationToUser(userId: string, notification: any): Promise<void> {
     this.io.to(`user:${userId}`).emit('notification', notification);
-    
+
     // Also send push notification if user is offline
     const userOnline = this.userSockets.has(userId);
     if (!userOnline) {
@@ -476,6 +476,76 @@ class SocketService {
     return this.userSockets.has(userId) ? 'online' : 'offline';
   }
 
+  // Gig-specific methods
+  public async broadcastGigJobCreated(job: any): Promise<void> {
+    this.io.emit('gig:job_created', job);
+  }
+
+  public async broadcastGigJobUpdated(job: any): Promise<void> {
+    this.io.emit('gig:job_updated', job);
+
+    // Notify job poster
+    if (job.postedBy) {
+      await this.sendNotificationToUser(job.postedBy.toString(), {
+        title: 'Job Updated',
+        message: `Your job "${job.title}" has been updated`,
+        type: 'info',
+        data: { jobId: job._id, type: 'gig_job_updated' }
+      });
+    }
+  }
+
+  public async broadcastGigJobDeleted(jobId: string, posterId: string): Promise<void> {
+    this.io.emit('gig:job_deleted', jobId);
+  }
+
+  public async notifyGigApplicationReceived(jobId: string, posterId: string, applicant: any): Promise<void> {
+    await this.sendNotificationToUser(posterId, {
+      title: 'New Job Application',
+      message: `${applicant.name} applied to your job`,
+      type: 'info',
+      data: { jobId, applicantId: applicant.id, type: 'gig_application_received' }
+    });
+
+    this.io.to(`user:${posterId}`).emit('gig:application_received', {
+      jobId,
+      applicant
+    });
+  }
+
+  public async notifyGigWorkerSelected(jobId: string, workerId: string, jobTitle: string): Promise<void> {
+    await this.sendNotificationToUser(workerId, {
+      title: 'You\'ve Been Selected!',
+      message: `You were selected for the job: ${jobTitle}`,
+      type: 'success',
+      data: { jobId, type: 'gig_worker_selected' }
+    });
+
+    this.io.to(`user:${workerId}`).emit('gig:worker_selected', {
+      jobId,
+      jobTitle
+    });
+  }
+
+  public async notifyGigJobCompleted(jobId: string, posterId: string, workerId: string, jobTitle: string): Promise<void> {
+    await this.sendNotificationToUser(posterId, {
+      title: 'Job Completed',
+      message: `The job "${jobTitle}" has been marked as completed`,
+      type: 'success',
+      data: { jobId, type: 'gig_job_completed' }
+    });
+
+    await this.sendNotificationToUser(workerId, {
+      title: 'Job Completed',
+      message: `The job "${jobTitle}" has been marked as completed`,
+      type: 'success',
+      data: { jobId, type: 'gig_job_completed' }
+    });
+
+    this.io.to(`user:${posterId}`).emit('gig:job_completed', { jobId, jobTitle });
+    this.io.to(`user:${workerId}`).emit('gig:job_completed', { jobId, jobTitle });
+  }
+
   // Private helper methods
   private broadcastUserStatus(userId: string, status: string): void {
     this.io.emit('user:status_changed', { userId, status, timestamp: new Date() });
@@ -501,10 +571,10 @@ class SocketService {
     await redisClient.setEx(messageKey, 86400 * 7, JSON.stringify(message)); // 7 days
 
     // Also store in conversation history
-    const conversationKey = message.recipientId 
+    const conversationKey = message.recipientId
       ? `conversation:${[message.senderId, message.recipientId].sort().join(':')}`
       : `room_messages:${message.roomId}`;
-    
+
     await redisClient.lPush(conversationKey, message.id);
     await redisClient.expire(conversationKey, 86400 * 30); // 30 days
   }
@@ -516,20 +586,20 @@ class SocketService {
 
   private async updateNotificationPreferences(userId: string, preferences: Partial<NotificationPreferences>): Promise<void> {
     const existingPrefs = await redisClient.get(`notification_prefs:${userId}`);
-    const currentPrefs: NotificationPreferences = existingPrefs 
+    const currentPrefs: NotificationPreferences = existingPrefs
       ? JSON.parse(existingPrefs)
       : {
-          userId,
-          emergencyAlerts: true,
-          communityMessages: true,
-          skillMatches: true,
-          businessOpportunities: true,
-          culturalEvents: true,
-          wellbeingCheckins: true,
-          pushNotifications: true,
-          emailNotifications: false,
-          quietHours: { enabled: false, start: '22:00', end: '07:00' }
-        };
+        userId,
+        emergencyAlerts: true,
+        communityMessages: true,
+        skillMatches: true,
+        businessOpportunities: true,
+        culturalEvents: true,
+        wellbeingCheckins: true,
+        pushNotifications: true,
+        emailNotifications: false,
+        quietHours: { enabled: false, start: '22:00', end: '07:00' }
+      };
 
     const updatedPrefs = { ...currentPrefs, ...preferences };
     await redisClient.setEx(`notification_prefs:${userId}`, 86400 * 365, JSON.stringify(updatedPrefs));
@@ -558,14 +628,14 @@ class SocketService {
       if (!subscriptionData) return;
 
       const subscription = JSON.parse(subscriptionData);
-      
+
       // Here you would integrate with a push notification service like Firebase Cloud Messaging
       // For now, we'll just log the notification
       console.log(`Push notification for user ${userId}:`, notification);
-      
+
       // TODO: Implement actual push notification sending
       // await webpush.sendNotification(subscription, JSON.stringify(notification));
-      
+
     } catch (error) {
       console.error('Error sending push notification:', error);
     }

@@ -77,7 +77,7 @@ export const LocationSetupStep: React.FC<LocationSetupStepProps> = ({
           </label>
           <input
             type="text"
-            value={data.location.postcode}
+            value={data.location.postcode || ''}
             onChange={(e) => handleInputChange('postcode', e.target.value)}
             className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             placeholder="Enter your postcode"
@@ -91,7 +91,7 @@ export const LocationSetupStep: React.FC<LocationSetupStepProps> = ({
             State/Territory *
           </label>
           <select
-            value={data.location.state}
+            value={data.location.state || ''}
             onChange={(e) => handleInputChange('state', e.target.value)}
             className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             required
@@ -111,7 +111,7 @@ export const LocationSetupStep: React.FC<LocationSetupStepProps> = ({
               Region
             </label>
             <select
-              value={data.location.region}
+              value={data.location.region || ''}
               onChange={(e) => handleInputChange('region', e.target.value)}
               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             >
@@ -131,7 +131,7 @@ export const LocationSetupStep: React.FC<LocationSetupStepProps> = ({
           </label>
           <input
             type="text"
-            value={data.location.town}
+            value={data.location.town || ''}
             onChange={(e) => handleInputChange('town', e.target.value)}
             className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             placeholder="Enter your town or city (optional)"
@@ -145,7 +145,7 @@ export const LocationSetupStep: React.FC<LocationSetupStepProps> = ({
           <div>
             <h4 className="font-medium text-blue-900 mb-1">Privacy Note</h4>
             <p className="text-sm text-blue-800">
-              Your location information helps us show you relevant local content and connect you with nearby community members. 
+              Your location information helps us show you relevant local content and connect you with nearby community members.
               You can adjust your privacy settings later to control how much location information is shared.
             </p>
           </div>

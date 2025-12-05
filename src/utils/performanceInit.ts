@@ -22,15 +22,15 @@ export interface PerformanceConfig {
 const defaultConfig: PerformanceConfig = {
   enableMonitoring: true,
   enableCaching: true,
-  enableCDN: process.env.NODE_ENV === 'production',
-  enableAutomatedTesting: process.env.NODE_ENV === 'production',
+  enableCDN: import.meta.env.MODE === 'production',
+  enableAutomatedTesting: import.meta.env.MODE === 'production',
   testingInterval: 60 // 1 hour
 };
 
 // Initialize all performance optimizations
 export async function initializePerformanceOptimizations(config: Partial<PerformanceConfig> = {}) {
   const finalConfig = { ...defaultConfig, ...config };
-  
+
   console.log('🚀 Initializing performance optimizations...', finalConfig);
 
   try {
@@ -71,7 +71,7 @@ export async function initializePerformanceOptimizations(config: Partial<Perform
     }
 
     console.log('✅ Performance optimizations initialized successfully');
-    
+
     return {
       monitor: globalPerformanceMonitor,
       cache: cacheManager,
@@ -80,14 +80,14 @@ export async function initializePerformanceOptimizations(config: Partial<Perform
 
   } catch (error) {
     console.error('❌ Failed to initialize performance optimizations:', error);
-    
+
     if (finalConfig.enableMonitoring) {
       globalPerformanceMonitor.recordEvent('performance_init_error', {
         error: error.message,
         timestamp: Date.now()
       });
     }
-    
+
     throw error;
   }
 }
@@ -105,16 +105,16 @@ export const performanceBudgets = {
 // Check performance budget compliance
 export function checkPerformanceBudget() {
   const budgetCheck = globalPerformanceMonitor.checkPerformanceBudget(performanceBudgets);
-  
+
   if (!budgetCheck.passed) {
     console.warn('⚠️ Performance budget violations detected:', budgetCheck.violations);
-    
+
     globalPerformanceMonitor.recordEvent('performance_budget_violation', {
       violations: budgetCheck.violations,
       timestamp: Date.now()
     });
   }
-  
+
   return budgetCheck;
 }
 
@@ -123,7 +123,7 @@ export function getPerformanceSummary() {
   const monitorStats = globalPerformanceMonitor.getStats();
   const cacheStats = cacheManager.getCacheStats();
   const testerStatus = globalPerformanceTester.getCurrentStatus();
-  
+
   return {
     monitoring: monitorStats,
     caching: cacheStats,
@@ -143,15 +143,15 @@ export function usePerformanceOptimizations() {
       try {
         await initializePerformanceOptimizations();
         setIsInitialized(true);
-        
+
         // Update summary periodically
         const updateSummary = () => {
           setSummary(getPerformanceSummary());
         };
-        
+
         updateSummary();
         const interval = setInterval(updateSummary, 30000); // Every 30 seconds
-        
+
         return () => clearInterval(interval);
       } catch (error) {
         console.error('Failed to initialize performance optimizations:', error);

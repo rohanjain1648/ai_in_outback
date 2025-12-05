@@ -4,14 +4,23 @@ import { OrbitControls, Text, Html } from '@react-three/drei';
 import * as THREE from 'three';
 import { Location, AustralianRegion, Coordinates } from '../types/location';
 import { locationService } from '../services/locationService';
+import { SpiritTrails } from './three/SpiritTrails';
 
 interface InteractiveMapProps {
   userLocation?: Location;
   nearbyUsers?: Location[];
   regions?: AustralianRegion[];
+  events?: Array<{
+    id: string;
+    title: string;
+    type: 'community' | 'emergency' | 'cultural' | 'agricultural';
+    priority?: 'low' | 'medium' | 'high';
+    coordinates: Coordinates;
+  }>;
   onLocationSelect?: (coordinates: Coordinates) => void;
   showUserMarkers?: boolean;
   showRegionBoundaries?: boolean;
+  showSpiritTrails?: boolean;
   className?: string;
 }
 
@@ -49,7 +58,7 @@ const MapMarker: React.FC<MapMarkerProps> = ({ position, color, label, onClick, 
         )}
         <meshStandardMaterial color={hovered ? '#ffffff' : color} />
       </mesh>
-      
+
       {hovered && (
         <Html distanceFactor={10}>
           <div className="bg-black bg-opacity-75 text-white px-2 py-1 rounded text-sm whitespace-nowrap">
@@ -75,7 +84,7 @@ const RegionBoundary: React.FC<RegionBoundaryProps> = ({ region }) => {
   ];
 
   const geometry = new THREE.BufferGeometry().setFromPoints(points);
-  
+
   const getRegionColor = (type: string) => {
     switch (type) {
       case 'urban': return '#4ade80';
@@ -147,9 +156,11 @@ export const InteractiveMap: React.FC<InteractiveMapProps> = ({
   userLocation,
   nearbyUsers = [],
   regions = [],
+  events = [],
   onLocationSelect,
   showUserMarkers = true,
   showRegionBoundaries = false,
+  showSpiritTrails = true,
   className = ''
 }) => {
   const [selectedLocation, setSelectedLocation] = useState<Coordinates | null>(null);
@@ -178,17 +189,17 @@ export const InteractiveMap: React.FC<InteractiveMapProps> = ({
       <Canvas camera={{ position: [133.5, 25, -27], fov: 60 }}>
         <ambientLight intensity={0.4} />
         <directionalLight position={[10, 10, 5]} intensity={0.8} />
-        
+
         <MapCamera userLocation={userLocation} />
-        
+
         {/* Australian terrain base */}
         <AustralianTerrain />
-        
+
         {/* Region boundaries */}
         {showRegionBoundaries && regions.map((region, index) => (
           <RegionBoundary key={index} region={region} />
         ))}
-        
+
         {/* User location marker */}
         {userLocation && (
           <MapMarker
@@ -198,19 +209,49 @@ export const InteractiveMap: React.FC<InteractiveMapProps> = ({
             isUser={true}
           />
         )}
-        
+
         {/* Nearby users markers */}
         {showUserMarkers && nearbyUsers.map((user, index) => (
           <MapMarker
             key={user._id}
             position={convertToMapPosition(user)}
-            color={user.region.type === 'urban' ? '#10b981' : 
-                   user.region.type === 'rural' ? '#f59e0b' : '#ef4444'}
+            color={user.region.type === 'urban' ? '#10b981' :
+              user.region.type === 'rural' ? '#f59e0b' : '#ef4444'}
             label={`${user.region.name} (${user.region.type})`}
             onClick={() => console.log('User clicked:', user)}
           />
         ))}
-        
+
+        {/* Spirit Trails connecting nearby users and events */}
+        {showSpiritTrails && (
+          <SpiritTrails
+            users={[
+              ...(userLocation ? [{
+                id: 'current-user',
+                position: convertToMapPosition(userLocation),
+                isActive: true
+              }] : []),
+              ...nearbyUsers.map(user => ({
+                id: user._id,
+                position: convertToMapPosition(user),
+                isActive: true
+              }))
+            ]}
+            events={events.map(event => ({
+              id: event.id,
+              position: [event.coordinates.longitude, 0.5, -event.coordinates.latitude] as [number, number, number],
+              title: event.title,
+              type: event.type,
+              priority: event.priority || 'medium'
+            }))}
+            maxDistance={30}
+            trailColor="#4A90E2"
+            beaconColor="#FF6B35"
+            enableParticles={true}
+            performanceMode="medium"
+          />
+        )}
+
         {/* Selected location marker */}
         {selectedLocation && (
           <MapMarker
@@ -219,7 +260,7 @@ export const InteractiveMap: React.FC<InteractiveMapProps> = ({
             label="Selected Location"
           />
         )}
-        
+
         {/* Interactive plane for click detection */}
         <mesh
           rotation={[-Math.PI / 2, 0, 0]}
@@ -229,7 +270,7 @@ export const InteractiveMap: React.FC<InteractiveMapProps> = ({
           <planeGeometry args={[50, 40]} />
           <meshBasicMaterial transparent opacity={0} />
         </mesh>
-        
+
         <OrbitControls
           enablePan={true}
           enableZoom={true}
@@ -239,7 +280,7 @@ export const InteractiveMap: React.FC<InteractiveMapProps> = ({
           maxPolarAngle={Math.PI / 2}
         />
       </Canvas>
-      
+
       {/* Map legend */}
       <div className="absolute top-4 right-4 bg-white bg-opacity-90 p-3 rounded-lg shadow-lg">
         <h3 className="font-semibold text-sm mb-2">Map Legend</h3>

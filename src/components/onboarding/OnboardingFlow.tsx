@@ -28,6 +28,7 @@ export interface OnboardingData {
     postcode: string;
     state: string;
     region: string;
+    town: string;
     allowLocationSharing: boolean;
   };
   interests: string[];
@@ -74,6 +75,7 @@ export const OnboardingFlow: React.FC = () => {
       postcode: '',
       state: '',
       region: '',
+      town: '',
       allowLocationSharing: true
     },
     interests: [],
@@ -112,24 +114,29 @@ export const OnboardingFlow: React.FC = () => {
   const handleComplete = async () => {
     setIsLoading(true);
     try {
-      // Save onboarding data to user profile
-      await updateProfile({
-        ...onboardingData.profile,
-        location: onboardingData.location,
-        interests: onboardingData.interests,
-        skills: onboardingData.skills,
-        privacy: onboardingData.privacy,
-        onboardingCompleted: true,
-        onboardingCompletedAt: new Date().toISOString()
-      });
+      // Save onboarding data to user profile (if updateProfile is available)
+      if (updateProfile) {
+        await updateProfile({
+          ...onboardingData.profile,
+          location: onboardingData.location,
+          interests: onboardingData.interests,
+          skills: onboardingData.skills,
+          privacy: onboardingData.privacy,
+          onboardingCompleted: true,
+          onboardingCompletedAt: new Date().toISOString()
+        });
+      }
 
       // Mark onboarding as completed in localStorage
       localStorage.setItem('onboarding_completed', 'true');
-      
-      // Redirect to dashboard
-      window.location.href = '/dashboard';
+
+      // Reload to home page
+      window.location.reload();
     } catch (error) {
       console.error('Failed to complete onboarding:', error);
+      // Still mark as completed even if profile update fails
+      localStorage.setItem('onboarding_completed', 'true');
+      window.location.reload();
     } finally {
       setIsLoading(false);
     }

@@ -12,13 +12,15 @@ interface CompletionStepProps {
   onPrevious: () => void;
   onDataChange: (data: Partial<OnboardingData>) => void;
   isLoading: boolean;
+  onComplete?: () => void;
 }
 
 export const CompletionStep: React.FC<CompletionStepProps> = ({
   data,
   onNext,
   onPrevious,
-  isLoading
+  isLoading,
+  onComplete
 }) => {
   const getPersonalizedMessage = () => {
     const firstName = data.profile.firstName;
@@ -88,7 +90,7 @@ export const CompletionStep: React.FC<CompletionStepProps> = ({
         >
           <span className="text-4xl">🎉</span>
         </motion.div>
-        
+
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -97,7 +99,7 @@ export const CompletionStep: React.FC<CompletionStepProps> = ({
         >
           {message.greeting}
         </motion.h2>
-        
+
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -213,7 +215,7 @@ export const CompletionStep: React.FC<CompletionStepProps> = ({
           Back to Tour
         </button>
         <button
-          onClick={onNext}
+          onClick={onComplete || onNext}
           disabled={isLoading}
           className="bg-green-600 text-white px-8 py-3 rounded-lg hover:bg-green-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-lg font-medium"
         >

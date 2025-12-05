@@ -278,6 +278,45 @@ Enable debug mode by setting `NODE_ENV=development`:
 - Camera position logging
 - Error boundaries for graceful failure handling
 
+## 🌟 Spirit Trails (Task 8)
+
+### Overview
+Spirit Trails create ethereal, animated connections between nearby users and glowing beacon markers for events, visualizing community connections in an immersive way.
+
+### Features
+- **Animated spirit trail lines** with custom GLSL shaders
+- **Glowing beacon markers** with pulsing animations
+- **Particle systems** flowing along trails
+- **Dynamic LOD** based on device performance
+- **Frustum culling** for optimization
+- **AR overlay mode** (framework prepared)
+
+### Usage
+```tsx
+import { SpiritTrails } from './three/SpiritTrails';
+
+<SpiritTrails
+  users={nearbyUsers}
+  events={communityEvents}
+  maxDistance={50}
+  trailColor="#4A90E2"
+  beaconColor="#FF6B35"
+  enableParticles={true}
+  performanceMode="medium"
+/>
+```
+
+### Demo
+```tsx
+import { SpiritTrailsDemo } from './three/SpiritTrailsDemo';
+
+function App() {
+  return <SpiritTrailsDemo />;
+}
+```
+
+See `SPIRIT_TRAILS_README.md` for detailed documentation.
+
 ## 🚀 Future Enhancements
 
 Potential improvements for future iterations:
