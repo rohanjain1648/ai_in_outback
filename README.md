@@ -494,10 +494,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - **Issues**: [GitHub Issues](https://github.com/yourusername/rural-connect-ai/issues)
 - **Email**: support@ruralconnect.au
 
-## 🎥 Demo Video
 
-Watch our 3-minute demo video: [YouTube Link](https://youtube.com/watch?v=demo-video-id)
 
 ---
 
-**Built with ❤️ for Rural Australia** | **Powered by Kiro AI** | **Hackathon 2024**
+**Built with ❤️ for Rural Australia** | **Powered by Kiro AI** | **Hackathon 2025**
