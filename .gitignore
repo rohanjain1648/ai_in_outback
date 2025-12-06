@@ -37,3 +37,12 @@ coverage
 # OS generated files
 Thumbs.db
 .DS_Store
+
+# Internal documentation (keep only essential docs)
+*_SUMMARY.md
+*_FIXES*.md
+*_FIX_*.md
+*_COMPLETE.md
+TASK_*.md
+TASK-*.md
+CONTEXT_*.md

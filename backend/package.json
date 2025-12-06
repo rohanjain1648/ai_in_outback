@@ -1,5 +1,5 @@
 {
-  "name": "rural-connect-ai-backend",
+  "name": "ai_in_outback-backend",
   "version": "1.0.0",
   "description": "Backend API for Rural Connect AI platform",
   "main": "dist/server.js",

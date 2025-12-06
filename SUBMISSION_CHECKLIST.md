@@ -290,8 +290,8 @@
 
 ### Links
 
-- **Live Demo**: https://rural-connect-ai.vercel.app
-- **GitHub Repository**: https://github.com/yourusername/rural-connect-ai
+- **Live Demo**: https://ai-in-outback.vercel.app
+- **GitHub Repository**: https://github.com/yourusername/ai_in_outback
 - **Demo Video**: [YouTube/Vimeo Link]
 - **Kiro Write-up**: [Link to PDF]
 - **Documentation**: [Link to docs]
@@ -341,7 +341,7 @@ Rural Connect AI is an intelligent community platform designed for regional Aust
 ### Demo Instructions
 
 **How to Access**:
-1. Visit https://rural-connect-ai.vercel.app
+1. Visit https://ai-in-outback.vercel.app
 2. Login with demo credentials:
    - Email: demo@ruralconnect.au
    - Password: demo2024
@@ -423,7 +423,7 @@ Rural Connect AI is an intelligent community platform designed for regional Aust
 
 - **Technical Issues**: [Your Email]
 - **Demo Support**: demo@ruralconnect.au
-- **GitHub Issues**: https://github.com/yourusername/rural-connect-ai/issues
+- **GitHub Issues**: https://github.com/yourusername/ai_in_outback/issues
 
 ## 🎉 Post-Submission
 

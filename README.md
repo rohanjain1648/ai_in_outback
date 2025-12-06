@@ -115,8 +115,8 @@ Rural Connect AI addresses critical challenges faced by rural communities includ
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/rural-connect-ai.git
-cd rural-connect-ai
+git clone https://github.com/yourusername/ai_in_outback.git
+cd ai_in_outback
 
 # Install frontend dependencies
 npm install
@@ -174,7 +174,7 @@ npm run dev
 ## 📁 Project Structure
 
 ```
-rural-connect-ai/
+ai_in_outback/
 ├── src/                           # Frontend source code
 │   ├── components/
 │   │   ├── voice/                # Voice interface
@@ -392,29 +392,33 @@ See [backend/README.md](backend/README.md) for complete API documentation.
 
 ## 📖 Documentation
 
-### Quick Start Guides
-- [Judges' Quick Reference](JUDGES_QUICK_REFERENCE.md)
-- [Demo Walkthrough](DEMO_WALKTHROUGH.md)
-- [Hackathon Features Test](HACKATHON_FEATURES_TEST.md)
+### For Judges & Reviewers
+- **[Judges' Quick Reference](JUDGES_QUICK_REFERENCE.md)** - Fast overview of key features
+- **[Demo Walkthrough](DEMO_WALKTHROUGH.md)** - Step-by-step feature demonstration
+- **[Demo Video Script](DEMO_VIDEO_SCRIPT.md)** - Guided video walkthrough
 
-### Development
-- [Local Setup Guide](LOCAL_SETUP_GUIDE.md)
-- [Backend API Documentation](backend/README.md)
-- [Kiro Development Process](KIRO_WRITEUP.md)
+### Setup & Development
+- **[Local Setup Guide](LOCAL_SETUP_GUIDE.md)** - Get started developing locally
+- **[Demo Setup Guide](DEMO_SETUP_GUIDE.md)** - Quick demo environment setup
+- **[Testing Guide](TESTING.md)** - Run tests and quality checks
 
 ### Feature Documentation
-- [Voice Interface](VOICE_INTERFACE_IMPLEMENTATION.md)
-- [Ethereal Notifications](ETHEREAL_NOTIFICATIONS_IMPLEMENTATION.md)
-- [Gig Board](GIG_BOARD_IMPLEMENTATION.md)
-- [Blockchain Trust](BLOCKCHAIN_IMPLEMENTATION_SUMMARY.md)
-- [Service Navigator](SERVICE_NAVIGATOR_IMPLEMENTATION.md)
-- [Spirit Trails](SPIRIT_TRAILS_IMPLEMENTATION.md)
-- [Metrics Dashboard](METRICS_DASHBOARD_IMPLEMENTATION.md)
-- [Accessibility](ACCESSIBILITY_IMPLEMENTATION.md)
+- **[Voice Interface](VOICE_INTERFACE_IMPLEMENTATION.md)** - Voice-first accessibility
+- **[Ethereal Notifications](ETHEREAL_NOTIFICATIONS_IMPLEMENTATION.md)** - Holographic notification system
+- **[Gig Board](GIG_BOARD_IMPLEMENTATION.md)** - Micro-job marketplace
+- **[Blockchain Trust](BLOCKCHAIN_IMPLEMENTATION_SUMMARY.md)** - NFT credentials & verification
+- **[Service Navigator](SERVICE_NAVIGATOR_IMPLEMENTATION.md)** - Government services integration
+- **[Spirit Trails](SPIRIT_TRAILS_IMPLEMENTATION.md)** - 3D community visualization
+- **[Spirit Avatars](SPIRIT_AVATAR_IMPLEMENTATION.md)** - AI-generated user avatars
+- **[Metrics Dashboard](METRICS_DASHBOARD_IMPLEMENTATION.md)** - Analytics & impact tracking
+- **[Accessibility](ACCESSIBILITY_IMPLEMENTATION.md)** - WCAG AAA compliance
 
 ### Deployment
-- [Vercel Deployment](VERCEL_DEPLOYMENT.md)
-- [Deployment Guide](README-DEPLOYMENT.md)
+- **[Vercel Deployment](VERCEL_DEPLOYMENT.md)** - Deploy to Vercel
+- **[Deployment Guide](README-DEPLOYMENT.md)** - Production deployment options
+
+### Development Process
+- **[Kiro Development Process](KIRO_WRITEUP.md)** - How this project was built with Kiro AI
 
 ## 🎯 Impact & Problem Solving
 
@@ -474,9 +478,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📞 Contact & Support
 
-- **Live Demo**: [rural-connect-ai.vercel.app](https://rural-connect-ai.vercel.app)
-- **GitHub**: [github.com/yourusername/rural-connect-ai](https://github.com/yourusername/rural-connect-ai)
-- **Issues**: [GitHub Issues](https://github.com/yourusername/rural-connect-ai/issues)
+- **Live Demo**: [ai-in-outback.vercel.app](https://ai-in-outback.vercel.app)
+- **GitHub**: [github.com/yourusername/ai_in_outback](https://github.com/yourusername/ai_in_outback)
+- **Issues**: [GitHub Issues](https://github.com/yourusername/ai_in_outback/issues)
 - **Email**: support@ruralconnect.au
 
 
