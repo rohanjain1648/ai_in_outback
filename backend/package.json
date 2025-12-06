@@ -1,5 +1,5 @@
 {
-  "name": "rural-connect-ai-backend",
+  "name": "ai_in_outback-backend",
   "version": "1.0.0",
   "description": "Backend API for Rural Connect AI platform",
   "main": "dist/server.js",
@@ -7,6 +7,7 @@
     "dev": "nodemon src/server.ts",
     "build": "tsc",
     "start": "node dist/server.js",
+    "seed:demo": "ts-node scripts/seedDemoData.ts",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
@@ -24,14 +25,19 @@
   "license": "MIT",
   "dependencies": {
     "@elastic/elasticsearch": "^9.1.1",
+    "@types/validator": "^13.15.10",
+    "axios": "^1.13.2",
     "bcryptjs": "^2.4.3",
     "compression": "^1.7.4",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
+    "ethers": "^6.16.0",
     "express": "^4.18.2",
     "express-rate-limit": "^7.1.5",
+    "express-validator": "^7.3.1",
     "fluent-ffmpeg": "^2.1.2",
     "helmet": "^7.1.0",
+    "isomorphic-dompurify": "^2.33.0",
     "joi": "^17.11.0",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.0.3",
@@ -41,7 +47,8 @@
     "redis": "^4.6.11",
     "sharp": "^0.33.2",
     "socket.io": "^4.8.1",
-    "uuid": "^9.0.1"
+    "uuid": "^9.0.1",
+    "validator": "^13.15.23"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { LandscapeDemo } from './components/three/LandscapeDemo';
 import AgriculturalDashboard from './components/AgriculturalDashboard';
 import BusinessDirectory from './components/BusinessDirectory';
@@ -7,9 +7,7 @@ import { CulturalHeritageDashboard } from './components/CulturalHeritageDashboar
 import WellbeingDashboard from './components/WellbeingDashboard';
 import ChatList from './components/chat/ChatList';
 import MainLayout from './components/layout/MainLayout';
-import { ExampleMobileNavigation } from './components/mobile/MobileNavigation';
 import MobileThreeOptimizer from './components/mobile/MobileThreeOptimizer';
-import TouchButton from './components/mobile/TouchButton';
 import { AdminDashboard } from './components/admin/AdminDashboard';
 import { OnboardingFlow } from './components/onboarding/OnboardingFlow';
 import { FeedbackSystem } from './components/feedback/FeedbackSystem';
@@ -17,6 +15,7 @@ import { UserGuide } from './components/guide/UserGuide';
 import { socketService } from './services/socketService';
 import { notificationService } from './services/notificationService';
 import { useDeviceDetection } from './utils/mobileDetection';
+import { SkipToContent, AccessibilityButton } from './components/accessibility';
 
 const App: React.FC = () => {
   const [currentView, setCurrentView] = useState<'home' | 'landscape' | 'agriculture' | 'business' | 'culture' | 'wellbeing' | 'chat' | 'admin' | 'onboarding'>('home');
@@ -64,291 +63,286 @@ const App: React.FC = () => {
     };
   }, []);
 
+  // Back button component for feature pages - positioned in top-right for better UX
+  const BackButton = () => (
+    <button
+      onClick={() => setCurrentView('home')}
+      className="fixed top-4 right-4 z-50 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-5 py-2.5 rounded-lg shadow-lg flex items-center gap-2 transition-all hover:shadow-xl font-medium"
+    >
+      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+      </svg>
+      Home
+    </button>
+  );
+
   if (currentView === 'landscape') {
     return (
-      <MobileThreeOptimizer
-        enableAdaptiveQuality={true}
-        enablePerformanceMonitoring={true}
-        targetFPS={deviceInfo.isMobile ? 30 : 60}
-      >
-        <LandscapeDemo />
-      </MobileThreeOptimizer>
+      <>
+        <BackButton />
+        <MobileThreeOptimizer
+          enableAdaptiveQuality={true}
+          enablePerformanceMonitoring={true}
+          targetFPS={deviceInfo.isMobile ? 30 : 60}
+        >
+          <LandscapeDemo />
+        </MobileThreeOptimizer>
+      </>
     );
   }
 
   if (currentView === 'agriculture') {
-    return <AgriculturalDashboard />;
+    return (
+      <>
+        <BackButton />
+        <AgriculturalDashboard />
+      </>
+    );
   }
 
   if (currentView === 'business') {
-    return <BusinessDirectory />;
+    return (
+      <>
+        <BackButton />
+        <BusinessDirectory />
+      </>
+    );
   }
 
   if (currentView === 'culture') {
-    return <CulturalHeritageDashboard />;
+    return (
+      <>
+        <BackButton />
+        <CulturalHeritageDashboard />
+      </>
+    );
   }
 
   if (currentView === 'wellbeing') {
-    return <WellbeingDashboard />;
+    return (
+      <>
+        <BackButton />
+        <WellbeingDashboard />
+      </>
+    );
   }
 
   if (currentView === 'chat') {
     return (
-      <MainLayout>
-        <ChatList />
-      </MainLayout>
+      <>
+        <BackButton />
+        <MainLayout>
+          <ChatList />
+        </MainLayout>
+      </>
     );
   }
 
   if (currentView === 'admin') {
-    return <AdminDashboard />;
+    return (
+      <>
+        <BackButton />
+        <AdminDashboard />
+      </>
+    );
   }
 
   if (currentView === 'onboarding') {
     return <OnboardingFlow />;
   }
 
+  // Feature cards data
+  const features = [
+    {
+      id: 'landscape',
+      icon: '🌏',
+      title: '3D Landscape',
+      description: 'Explore dynamic Australian terrain with real-time weather',
+      color: 'from-green-500 to-emerald-600',
+      view: 'landscape' as const
+    },
+    {
+      id: 'agriculture',
+      icon: '🚜',
+      title: 'Agriculture',
+      description: 'Farm management, crop monitoring & market insights',
+      color: 'from-lime-500 to-green-600',
+      view: 'agriculture' as const
+    },
+    {
+      id: 'business',
+      icon: '🏢',
+      title: 'Business',
+      description: 'Directory, matching & economic opportunities',
+      color: 'from-blue-500 to-indigo-600',
+      view: 'business' as const
+    },
+    {
+      id: 'culture',
+      icon: '📚',
+      title: 'Cultural Heritage',
+      description: 'Stories, traditions & community knowledge',
+      color: 'from-amber-500 to-orange-600',
+      view: 'culture' as const
+    },
+    {
+      id: 'wellbeing',
+      icon: '💚',
+      title: 'Wellbeing',
+      description: 'Mental health support & community care',
+      color: 'from-purple-500 to-pink-600',
+      view: 'wellbeing' as const
+    },
+    {
+      id: 'admin',
+      icon: '⚙️',
+      title: 'Admin',
+      description: 'Platform management & analytics',
+      color: 'from-gray-500 to-slate-600',
+      view: 'admin' as const
+    }
+  ];
+
   return (
-    <MainLayout currentView={currentView} onViewChange={setCurrentView}>
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        className="text-center"
-      >
-        <h1 className={`font-display font-bold text-eucalyptus-800 mb-4 ${
-          deviceInfo.isMobile ? 'text-2xl sm:text-3xl' : 'text-4xl md:text-6xl'
-        }`}>
-          Rural Connect AI
-        </h1>
-        <p className={`text-bushland-700 mb-8 max-w-2xl mx-auto ${
-          deviceInfo.isMobile ? 'text-base' : 'text-lg md:text-xl'
-        }`}>
-          Intelligent community platform for regional and rural Australia
-        </p>
-        
-        <motion.div
-          className={`mx-auto bg-eucalyptus-500 rounded-full flex items-center justify-center mb-8 ${
-            deviceInfo.isMobile ? 'w-16 h-16' : 'w-24 h-24'
-          }`}
-          animate={{ rotate: 360 }}
-          transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
-        >
-          <div className={`bg-outback-400 rounded-full ${
-            deviceInfo.isMobile ? 'w-10 h-10' : 'w-16 h-16'
-          }`}></div>
-        </motion.div>
-
-        <div className="space-y-4">
-          <p className="text-bushland-600">
-            Mobile-optimized platform with responsive design!
-          </p>
-          
-          {/* Mobile Navigation */}
-          {deviceInfo.isMobile ? (
-            <ExampleMobileNavigation
-              currentView={currentView}
-              onViewChange={setCurrentView}
-              unreadMessages={0}
-            />
-          ) : (
-            /* Desktop buttons */
-            <div className="flex flex-wrap justify-center gap-4">
-              <TouchButton
-                onClick={() => setCurrentView('landscape')}
-                variant="primary"
-                size="lg"
-                className="bg-eucalyptus-600 hover:bg-eucalyptus-700"
-              >
-                🌏 Explore Australian Landscape
-              </TouchButton>
-              
-              <TouchButton
-                onClick={() => setCurrentView('agriculture')}
-                variant="primary"
-                size="lg"
-                className="bg-green-600 hover:bg-green-700"
-              >
-                🚜 Agricultural Dashboard
-              </TouchButton>
-              
-              <TouchButton
-                onClick={() => setCurrentView('business')}
-                variant="primary"
-                size="lg"
-                className="bg-blue-600 hover:bg-blue-700"
-              >
-                🏢 Business Directory
-              </TouchButton>
-              
-              <TouchButton
-                onClick={() => setCurrentView('culture')}
-                variant="primary"
-                size="lg"
-                className="bg-amber-600 hover:bg-amber-700"
-              >
-                📚 Cultural Heritage
-              </TouchButton>
-              
-              <TouchButton
-                onClick={() => setCurrentView('wellbeing')}
-                variant="primary"
-                size="lg"
-                className="bg-purple-600 hover:bg-purple-700"
-              >
-                💚 Mental Health & Wellbeing
-              </TouchButton>
-              
-              <TouchButton
-                onClick={() => setCurrentView('chat')}
-                variant="primary"
-                size="lg"
-                className="bg-indigo-600 hover:bg-indigo-700"
-              >
-                💬 Real-time Chat & Calls
-              </TouchButton>
-              
-              <TouchButton
-                onClick={() => setCurrentView('admin')}
-                variant="primary"
-                size="lg"
-                className="bg-red-600 hover:bg-red-700"
-              >
-                ⚙️ Admin Dashboard
-              </TouchButton>
-            </div>
-          )}
-
-          {/* Help & Support Buttons */}
-          <div className="mt-8 flex flex-wrap justify-center gap-4">
-            <TouchButton
-              onClick={() => setShowUserGuide(true)}
-              variant="secondary"
-              size="md"
-              className="bg-gray-600 hover:bg-gray-700"
-            >
-              📖 User Guide
-            </TouchButton>
-            
-            <TouchButton
-              onClick={() => setShowFeedback(true)}
-              variant="secondary"
-              size="md"
-              className="bg-gray-600 hover:bg-gray-700"
-            >
-              💬 Send Feedback
-            </TouchButton>
-            
-            <TouchButton
-              onClick={() => setCurrentView('onboarding')}
-              variant="secondary"
-              size="md"
-              className="bg-gray-600 hover:bg-gray-700"
-            >
-              🚀 Take Tour
-            </TouchButton>
-          </div>
-
-          {/* Feature overview - responsive grid */}
-          <div className={`mt-8 gap-6 text-sm text-bushland-500 max-w-8xl mx-auto ${
-            deviceInfo.isMobile 
-              ? 'grid grid-cols-1 space-y-6' 
-              : 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5'
-          }`}>
-            <div>
-              <h3 className="font-semibold mb-2">🌏 3D Landscape Features:</h3>
-              <ul className="text-left space-y-1">
-                <li>✅ Dynamic terrain generation with regional variations</li>
-                <li>✅ Time-based lighting system (24-hour cycle)</li>
-                <li>✅ Weather effects (rain, clouds, wind)</li>
-                <li>✅ Native Australian flora (eucalyptus, wattle, bushes)</li>
-                <li>✅ Mobile-optimized touch controls</li>
-                <li>✅ Adaptive performance optimization</li>
-                <li>✅ Interactive controls and presets</li>
-              </ul>
-            </div>
-            
-            <div>
-              <h3 className="font-semibold mb-2">🚜 Agricultural Intelligence:</h3>
-              <ul className="text-left space-y-1">
-                <li>✅ Farm profile management with crops & livestock</li>
-                <li>✅ Real-time weather data & agricultural conditions</li>
-                <li>✅ Mobile camera crop photo analysis</li>
-                <li>✅ Market price tracking & alerts</li>
-                <li>✅ Farming recommendations engine</li>
-                <li>✅ Crop health monitoring & disease detection</li>
-                <li>✅ Touch-friendly dashboard interface</li>
-              </ul>
-            </div>
-            
-            <div>
-              <h3 className="font-semibold mb-2">💼 Business Directory:</h3>
-              <ul className="text-left space-y-1">
-                <li>✅ Business profile creation & management</li>
-                <li>✅ AI-powered business-to-business matching</li>
-                <li>✅ Location-based business discovery</li>
-                <li>✅ Business verification & rating system</li>
-                <li>✅ Economic opportunity notifications</li>
-                <li>✅ Mobile-optimized analytics dashboard</li>
-                <li>✅ Touch-friendly search & filtering</li>
-              </ul>
-            </div>
-            
-            <div>
-              <h3 className="font-semibold mb-2">📚 Cultural Heritage:</h3>
-              <ul className="text-left space-y-1">
-                <li>✅ Cultural story creation with multimedia support</li>
-                <li>✅ AI-powered story categorization & tagging</li>
-                <li>✅ Story recommendation engine</li>
-                <li>✅ Mobile multimedia upload & management</li>
-                <li>✅ Story connection & relationship mapping</li>
-                <li>✅ Mobile-optimized 3D story presentation</li>
-                <li>✅ Community story contribution & curation</li>
-              </ul>
-            </div>
-            
-            <div>
-              <h3 className="font-semibold mb-2">💚 Mental Health & Wellbeing:</h3>
-              <ul className="text-left space-y-1">
-                <li>✅ Daily wellbeing check-in & mood tracking</li>
-                <li>✅ AI-powered risk assessment & support identification</li>
-                <li>✅ Anonymous peer support network matching</li>
-                <li>✅ Mental health resource directory with telehealth</li>
-                <li>✅ Crisis intervention & professional referral system</li>
-                <li>✅ Mobile-optimized wellbeing trends visualization</li>
-                <li>✅ 24/7 crisis resources & emergency support</li>
-              </ul>
-            </div>
-            
-            {/* New mobile optimization features */}
-            <div className={deviceInfo.isMobile ? 'col-span-1' : 'col-span-full'}>
-              <h3 className="font-semibold mb-2">📱 Mobile Optimization Features:</h3>
-              <ul className="text-left space-y-1">
-                <li>✅ Responsive design for all screen sizes</li>
-                <li>✅ Touch-friendly navigation and interaction patterns</li>
-                <li>✅ Mobile camera integration for photo analysis</li>
-                <li>✅ Adaptive Three.js performance optimization</li>
-                <li>✅ Mobile-optimized offline functionality</li>
-                <li>✅ Touch gestures and haptic feedback</li>
-                <li>✅ Progressive Web App (PWA) capabilities</li>
-              </ul>
+    <>
+      <SkipToContent />
+      <div className="min-h-screen bg-gradient-to-br from-green-50 via-blue-50 to-amber-50">
+        {/* Header */}
+        <header className="bg-white/80 backdrop-blur-sm shadow-sm sticky top-0 z-40">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-gradient-to-br from-green-500 to-blue-500 rounded-lg flex items-center justify-center">
+                  <span className="text-white text-xl font-bold">RC</span>
+                </div>
+                <div>
+                  <h1 className="text-xl font-bold text-gray-900">Rural Connect AI</h1>
+                  <p className="text-xs text-gray-600">Empowering Rural Communities</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => setShowUserGuide(true)}
+                  className="p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors"
+                  title="User Guide"
+                >
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                  </svg>
+                </button>
+                <button
+                  onClick={() => setShowFeedback(true)}
+                  className="p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors"
+                  title="Send Feedback"
+                >
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+                  </svg>
+                </button>
+                <button
+                  onClick={() => setCurrentView('onboarding')}
+                  className="hidden sm:flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-green-500 to-blue-500 text-white rounded-lg hover:shadow-lg transition-all"
+                >
+                  <span>Take Tour</span>
+                </button>
+              </div>
             </div>
           </div>
+        </header>
+
+        {/* Main Content */}
+        <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          {/* Hero Section */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-12"
+          >
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+              Welcome to Rural Connect AI
+            </h2>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              Your intelligent platform for community connection, agricultural innovation, and rural prosperity
+            </p>
+          </motion.div>
+
+          {/* Feature Cards Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+            {features.map((feature, index) => (
+              <motion.button
+                key={feature.id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                onClick={() => setCurrentView(feature.view)}
+                className="group relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden text-left"
+              >
+                {/* Gradient Background */}
+                <div className={`absolute inset-0 bg-gradient-to-br ${feature.color} opacity-0 group-hover:opacity-10 transition-opacity`} />
+
+                {/* Content */}
+                <div className="relative p-6">
+                  <div className="flex items-start justify-between mb-4">
+                    <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${feature.color} flex items-center justify-center text-3xl shadow-lg`}>
+                      {feature.icon}
+                    </div>
+                    <svg className="w-6 h-6 text-gray-400 group-hover:text-gray-600 group-hover:translate-x-1 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </div>
+                  <h3 className="text-xl font-bold text-gray-900 mb-2">{feature.title}</h3>
+                  <p className="text-gray-600 text-sm">{feature.description}</p>
+                </div>
+              </motion.button>
+            ))}
           </div>
-      </motion.div>
 
-      {/* Feedback System */}
-      <FeedbackSystem 
-        isOpen={showFeedback} 
-        onClose={() => setShowFeedback(false)} 
-      />
+          {/* Quick Stats */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.6 }}
+            className="bg-white rounded-2xl shadow-lg p-8 mb-8"
+          >
+            <h3 className="text-xl font-bold text-gray-900 mb-6 text-center">Platform Capabilities</h3>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+              <div className="text-center">
+                <div className="text-3xl font-bold text-green-600 mb-1">6</div>
+                <div className="text-sm text-gray-600">Core Features</div>
+              </div>
+              <div className="text-center">
+                <div className="text-3xl font-bold text-blue-600 mb-1">24/7</div>
+                <div className="text-sm text-gray-600">Support Available</div>
+              </div>
+              <div className="text-center">
+                <div className="text-3xl font-bold text-purple-600 mb-1">AI</div>
+                <div className="text-sm text-gray-600">Powered Insights</div>
+              </div>
+              <div className="text-center">
+                <div className="text-3xl font-bold text-amber-600 mb-1">100%</div>
+                <div className="text-sm text-gray-600">Mobile Optimized</div>
+              </div>
+            </div>
+          </motion.div>
+        </main>
 
-      {/* User Guide */}
-      <UserGuide 
-        isOpen={showUserGuide} 
-        onClose={() => setShowUserGuide(false)} 
-      />
-    </MainLayout>
+        {/* Feedback System */}
+        <FeedbackSystem
+          isOpen={showFeedback}
+          onClose={() => setShowFeedback(false)}
+        />
+
+        {/* User Guide */}
+        <UserGuide
+          isOpen={showUserGuide}
+          onClose={() => setShowUserGuide(false)}
+        />
+
+        {/* Accessibility Button */}
+        <AccessibilityButton />
+      </div>
+    </>
   );
 };
 

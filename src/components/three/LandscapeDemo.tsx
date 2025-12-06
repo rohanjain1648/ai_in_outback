@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { AustralianLandscape } from './AustralianLandscape';
-import { PerformanceOptimizer } from './PerformanceOptimizer';
 import { useDeviceDetection } from '../../utils/mobileDetection';
 import TouchButton from '../mobile/TouchButton';
 
@@ -33,13 +32,11 @@ export const LandscapeDemo: React.FC<LandscapeDemoProps> = ({ className = '' }) 
   return (
     <div className={`relative w-full h-screen ${className}`}>
       {/* Three.js Scene */}
-      <PerformanceOptimizer targetFPS={60} enableLOD={true}>
-        <AustralianLandscape
-          timeOfDay={timeOfDay}
-          weatherType={weatherType}
-          region={region}
-        />
-      </PerformanceOptimizer>
+      <AustralianLandscape
+        timeOfDay={timeOfDay}
+        weatherType={weatherType}
+        region={region}
+      />
 
       {/* Controls Panel */}
       {showControls && (

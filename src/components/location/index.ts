@@ -1,0 +1,1 @@
+export { ManualLocationEntry } from './ManualLocationEntry';

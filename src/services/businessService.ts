@@ -1,23 +1,21 @@
-import { 
-  Business, 
-  BusinessSearchFilters, 
-  BusinessMatch, 
-  EconomicOpportunity, 
+import {
+  Business,
+  BusinessSearchFilters,
+  BusinessMatch,
+  EconomicOpportunity,
   BusinessAnalytics,
-  BusinessReview 
+  BusinessReview
 } from '../types/business';
 
-const API_BASE_URL = (typeof window !== 'undefined' && (window as any).import?.meta?.env?.VITE_API_URL) || 
-                  (process.env.VITE_API_URL) || 
-                  'http://localhost:3001/api';
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001/api';
 
 class BusinessService {
   private async makeRequest<T>(
-    endpoint: string, 
+    endpoint: string,
     options: RequestInit = {}
   ): Promise<T> {
     const token = localStorage.getItem('token');
-    
+
     const response = await fetch(`${API_BASE_URL}${endpoint}`, {
       ...options,
       headers: {
@@ -43,7 +41,7 @@ class BusinessService {
     totalPages: number;
   }> {
     const queryParams = new URLSearchParams();
-    
+
     Object.entries(filters).forEach(([key, value]) => {
       if (value !== undefined && value !== null) {
         if (Array.isArray(value)) {
@@ -113,8 +111,8 @@ class BusinessService {
   }
 
   async getEconomicOpportunities(
-    latitude: number, 
-    longitude: number, 
+    latitude: number,
+    longitude: number,
     radius: number = 25
   ): Promise<{ opportunities: EconomicOpportunity[] }> {
     return this.makeRequest(
@@ -126,7 +124,7 @@ class BusinessService {
   formatBusinessHours(businessHours: Business['businessHours']): string {
     const days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
     const dayNames = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-    
+
     const openDays = days
       .map((day, index) => {
         const hours = businessHours[day];
@@ -190,10 +188,10 @@ class BusinessService {
     const fullStars = Math.floor(rating);
     const hasHalfStar = rating % 1 >= 0.5;
     const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
-    
-    return '★'.repeat(fullStars) + 
-           (hasHalfStar ? '☆' : '') + 
-           '☆'.repeat(emptyStars);
+
+    return '★'.repeat(fullStars) +
+      (hasHalfStar ? '☆' : '') +
+      '☆'.repeat(emptyStars);
   }
 }
 

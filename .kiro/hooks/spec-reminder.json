@@ -1,0 +1,12 @@
+{
+    "name": "Spec Reminder",
+    "description": "Remind to check spec when starting new session",
+    "trigger": {
+        "type": "onSessionStart"
+    },
+    "action": {
+        "type": "message",
+        "message": "Welcome to Rural Connect AI! Check .kiro/specs/hackathon-enhancements/ for requirements, design, and tasks. Follow spec-driven development methodology."
+    },
+    "enabled": true
+}

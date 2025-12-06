@@ -1,11 +1,11 @@
 import { Resource, SearchFilters, SearchResult, ResourceRecommendation, CreateResourceData, ResourceCategory } from '../types/resource';
 
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:3001/api';
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001/api';
 
 class ResourceService {
   private async makeRequest<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
     const token = localStorage.getItem('token');
-    
+
     const config: RequestInit = {
       headers: {
         'Content-Type': 'application/json',
@@ -16,7 +16,7 @@ class ResourceService {
     };
 
     const response = await fetch(`${API_BASE_URL}${endpoint}`, config);
-    
+
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({ message: 'Request failed' }));
       throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
@@ -28,7 +28,7 @@ class ResourceService {
 
   async searchResources(filters: SearchFilters): Promise<SearchResult> {
     const queryParams = new URLSearchParams();
-    
+
     Object.entries(filters).forEach(([key, value]) => {
       if (value !== undefined && value !== null && value !== '') {
         if (Array.isArray(value)) {
@@ -138,7 +138,7 @@ class ResourceService {
 
   formatDistance(distance?: number): string {
     if (!distance) return '';
-    
+
     if (distance < 1000) {
       return `${Math.round(distance)}m away`;
     } else {

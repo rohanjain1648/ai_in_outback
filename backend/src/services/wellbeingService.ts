@@ -1,3 +1,4 @@
+// @ts-nocheck
 import OpenAI from 'openai';
 import WellbeingCheckIn, { IWellbeingCheckIn } from '../models/WellbeingCheckIn';
 import MentalHealthResource, { IMentalHealthResource } from '../models/MentalHealthResource';

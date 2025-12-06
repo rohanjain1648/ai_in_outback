@@ -65,7 +65,7 @@ class SocketService {
     }
 
     const serverUrl = (import.meta.env as any).VITE_API_URL || 'http://localhost:3001';
-    
+
     this.socket = io(serverUrl, {
       auth: {
         token
@@ -85,7 +85,7 @@ class SocketService {
       console.log('Socket connected:', this.socket?.id);
       this.reconnectAttempts = 0;
       this.emit('connected');
-      
+
       // Join user's personal room
       try {
         const user = await authService.getCurrentUser();
@@ -100,12 +100,12 @@ class SocketService {
     this.socket.on('disconnect', (reason) => {
       console.log('Socket disconnected:', reason);
       this.emit('disconnected', reason);
-      
+
       if (reason === 'io server disconnect') {
         // Server initiated disconnect, don't reconnect automatically
         return;
       }
-      
+
       this.handleReconnection();
     });
 
@@ -157,6 +157,31 @@ class SocketService {
       this.showEmergencyNotification(alert);
     });
 
+    // Gig job events
+    this.socket.on('gig:job_created', (job: any) => {
+      this.emit('gig:job_created', job);
+    });
+
+    this.socket.on('gig:job_updated', (job: any) => {
+      this.emit('gig:job_updated', job);
+    });
+
+    this.socket.on('gig:job_deleted', (jobId: string) => {
+      this.emit('gig:job_deleted', jobId);
+    });
+
+    this.socket.on('gig:application_received', (data: any) => {
+      this.emit('gig:application_received', data);
+    });
+
+    this.socket.on('gig:worker_selected', (data: any) => {
+      this.emit('gig:worker_selected', data);
+    });
+
+    this.socket.on('gig:job_completed', (data: any) => {
+      this.emit('gig:job_completed', data);
+    });
+
     // WebRTC signaling events
     this.socket.on('webrtc:offer', (data: any) => {
       this.emit('webrtc_offer', data);
@@ -186,12 +211,12 @@ class SocketService {
 
     this.reconnectAttempts++;
     const delay = this.reconnectDelay * Math.pow(2, this.reconnectAttempts - 1);
-    
+
     console.log(`Attempting to reconnect in ${delay}ms (attempt ${this.reconnectAttempts})`);
-    
+
     setTimeout(() => {
       if (this.socket?.connected) return;
-      
+
       this.socket?.connect();
     }, delay);
   }
@@ -365,7 +390,7 @@ class SocketService {
   // Emergency methods
   public async acknowledgeEmergencyAlert(alertId: string): Promise<void> {
     if (!this.socket?.connected) return;
-    
+
     const user = await authService.getCurrentUser();
     if (user) {
       this.socket.emit('emergency:acknowledge', { alertId, userId: user.id });
@@ -374,15 +399,15 @@ class SocketService {
 
   public async updateSafetyStatus(alertId: string, status: 'safe' | 'need_help', message?: string, location?: [number, number]): Promise<void> {
     if (!this.socket?.connected) return;
-    
+
     const user = await authService.getCurrentUser();
     if (user) {
-      this.socket.emit('emergency:safety_status', { 
-        alertId, 
-        userId: user.id, 
-        status, 
-        message, 
-        location 
+      this.socket.emit('emergency:safety_status', {
+        alertId,
+        userId: user.id,
+        status,
+        message,
+        location
       });
     }
   }

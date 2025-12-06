@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { useAuth } from '../hooks/useAuth';
+import { useAuth } from '../hooks/useAuth.tsx';
 import { userService } from '../services/userService';
-import { User, UpdateProfileData } from '../types/user';
+import { UpdateProfileData } from '../types/user';
+import { AvatarGenerator, AvatarGallery, AvatarDisplay } from './avatar';
+import { CredentialGallery } from './blockchain/CredentialGallery';
+import { blockchainService } from '../services/blockchainService';
+import { BlockchainCredential } from '../types/blockchain';
 
 export const UserProfile: React.FC = () => {
   const { user, refreshUser } = useAuth();
@@ -9,7 +13,11 @@ export const UserProfile: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState<string[]>([]);
   const [success, setSuccess] = useState<string>('');
-  
+  const [showAvatarGenerator, setShowAvatarGenerator] = useState(false);
+  const [showAvatarGallery, setShowAvatarGallery] = useState(false);
+  const [showCredentials, setShowCredentials] = useState(true); // Show credentials by default
+  const [credentialCount, setCredentialCount] = useState(0);
+
   const [formData, setFormData] = useState<UpdateProfileData>({
     profile: {
       firstName: '',
@@ -59,8 +67,18 @@ export const UserProfile: React.FC = () => {
         profile: { ...user.profile },
         preferences: { ...user.preferences },
       });
+      loadCredentialCount();
     }
   }, [user]);
+
+  const loadCredentialCount = async () => {
+    try {
+      const credentials = await blockchainService.getUserCredentials();
+      setCredentialCount(credentials.length);
+    } catch (error) {
+      console.error('Failed to load credential count:', error);
+    }
+  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value, type } = e.target;
@@ -80,14 +98,14 @@ export const UserProfile: React.FC = () => {
       setFormData(prev => {
         const newPrefs = { ...prev.preferences! };
         let current: any = newPrefs;
-        
+
         for (let i = 0; i < prefPath.length - 1; i++) {
           current = current[prefPath[i]];
         }
-        
+
         const lastKey = prefPath[prefPath.length - 1];
         current[lastKey] = type === 'checkbox' ? checked : (type === 'number' ? Number(value) : value);
-        
+
         return {
           ...prev,
           preferences: newPrefs,
@@ -141,9 +159,67 @@ export const UserProfile: React.FC = () => {
   return (
     <div className="max-w-4xl mx-auto p-6">
       <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+        {/* Avatar Section */}
+        <div className="px-6 py-6 bg-gradient-to-br from-purple-50 to-pink-50 border-b border-gray-200">
+          <div className="flex items-center space-x-6">
+            <AvatarDisplay
+              avatarUrl={user?.profile?.avatar || undefined}
+              size="xl"
+              showGlow={true}
+              alt={user?.profile?.displayName || 'User Avatar'}
+            />
+            <div className="flex-1">
+              <h2 className="text-xl font-bold text-gray-900">
+                {user?.profile?.displayName || `${user?.profile?.firstName} ${user?.profile?.lastName}`}
+              </h2>
+              <p className="text-gray-600">{user?.profile?.occupation || 'Community Member'}</p>
+              <div className="mt-3 flex space-x-2">
+                <button
+                  onClick={() => setShowAvatarGenerator(!showAvatarGenerator)}
+                  className="px-4 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700 transition-colors text-sm"
+                >
+                  Generate New Avatar
+                </button>
+                <button
+                  onClick={() => setShowAvatarGallery(!showAvatarGallery)}
+                  className="px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700 transition-colors text-sm"
+                >
+                  View Gallery
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* Avatar Generator */}
+          {showAvatarGenerator && (
+            <div className="mt-6">
+              <AvatarGenerator
+                onAvatarGenerated={() => {
+                  setSuccess('Avatar generated successfully!');
+                  setShowAvatarGenerator(false);
+                  refreshUser();
+                }}
+                onClose={() => setShowAvatarGenerator(false)}
+              />
+            </div>
+          )}
+
+          {/* Avatar Gallery */}
+          {showAvatarGallery && (
+            <div className="mt-6">
+              <AvatarGallery
+                onAvatarSelected={() => {
+                  setSuccess('Avatar updated successfully!');
+                  refreshUser();
+                }}
+              />
+            </div>
+          )}
+        </div>
+
         <div className="px-6 py-4 border-b border-gray-200">
           <div className="flex justify-between items-center">
-            <h1 className="text-2xl font-bold text-gray-900">User Profile</h1>
+            <h1 className="text-2xl font-bold text-gray-900">Profile Information</h1>
             {!isEditing ? (
               <button
                 onClick={() => setIsEditing(true)}
@@ -206,7 +282,7 @@ export const UserProfile: React.FC = () => {
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100"
                   />
                 </div>
-                
+
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
                     Last Name
@@ -220,7 +296,7 @@ export const UserProfile: React.FC = () => {
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100"
                   />
                 </div>
-                
+
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
                     Display Name
@@ -234,7 +310,7 @@ export const UserProfile: React.FC = () => {
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100"
                   />
                 </div>
-                
+
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
                     Occupation
@@ -249,7 +325,7 @@ export const UserProfile: React.FC = () => {
                   />
                 </div>
               </div>
-              
+
               <div className="mt-4">
                 <label className="block text-sm font-medium text-gray-700 mb-1">
                   Bio
@@ -284,7 +360,7 @@ export const UserProfile: React.FC = () => {
                     placeholder="e.g., Cattle, Crops, Mixed"
                   />
                 </div>
-                
+
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
                     Business Type
@@ -299,7 +375,7 @@ export const UserProfile: React.FC = () => {
                     placeholder="e.g., Agricultural Services, Tourism"
                   />
                 </div>
-                
+
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
                     Years in Area
@@ -314,7 +390,7 @@ export const UserProfile: React.FC = () => {
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100"
                   />
                 </div>
-                
+
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
                     Family Size
@@ -347,7 +423,7 @@ export const UserProfile: React.FC = () => {
                   />
                   Show my location to other community members
                 </label>
-                
+
                 <label className="flex items-center">
                   <input
                     type="checkbox"
@@ -359,7 +435,7 @@ export const UserProfile: React.FC = () => {
                   />
                   Make my profile visible to other users
                 </label>
-                
+
                 <label className="flex items-center">
                   <input
                     type="checkbox"
@@ -371,7 +447,7 @@ export const UserProfile: React.FC = () => {
                   />
                   Allow community matching suggestions
                 </label>
-                
+
                 <label className="flex items-center">
                   <input
                     type="checkbox"
@@ -402,7 +478,7 @@ export const UserProfile: React.FC = () => {
                     />
                     Email notifications
                   </label>
-                  
+
                   <label className="flex items-center">
                     <input
                       type="checkbox"
@@ -414,7 +490,7 @@ export const UserProfile: React.FC = () => {
                     />
                     Push notifications
                   </label>
-                  
+
                   <label className="flex items-center">
                     <input
                       type="checkbox"
@@ -426,7 +502,7 @@ export const UserProfile: React.FC = () => {
                     />
                     SMS notifications
                   </label>
-                  
+
                   <label className="flex items-center">
                     <input
                       type="checkbox"
@@ -439,7 +515,7 @@ export const UserProfile: React.FC = () => {
                     Emergency alerts
                   </label>
                 </div>
-                
+
                 <div className="space-y-3">
                   <label className="flex items-center">
                     <input
@@ -452,7 +528,7 @@ export const UserProfile: React.FC = () => {
                     />
                     Community updates
                   </label>
-                  
+
                   <label className="flex items-center">
                     <input
                       type="checkbox"
@@ -464,7 +540,7 @@ export const UserProfile: React.FC = () => {
                     />
                     Agricultural insights
                   </label>
-                  
+
                   <label className="flex items-center">
                     <input
                       type="checkbox"
@@ -476,7 +552,7 @@ export const UserProfile: React.FC = () => {
                     />
                     Business opportunities
                   </label>
-                  
+
                   <label className="flex items-center">
                     <input
                       type="checkbox"
@@ -493,6 +569,32 @@ export const UserProfile: React.FC = () => {
             </div>
           </form>
         </div>
+      </div>
+
+      {/* Blockchain Credentials Section */}
+      <div className="bg-white rounded-lg shadow-lg overflow-hidden mt-6">
+        <div className="px-6 py-4 bg-gradient-to-br from-blue-50 to-indigo-50 border-b border-gray-200">
+          <div className="flex justify-between items-center">
+            <div>
+              <h2 className="text-2xl font-bold text-gray-900">Blockchain Credentials</h2>
+              <p className="text-sm text-gray-600 mt-1">
+                Your verified achievements and contributions ({credentialCount} credential{credentialCount !== 1 ? 's' : ''})
+              </p>
+            </div>
+            <button
+              onClick={() => setShowCredentials(!showCredentials)}
+              className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+            >
+              {showCredentials ? 'Hide' : 'Show'} Credentials
+            </button>
+          </div>
+        </div>
+
+        {showCredentials && (
+          <div className="p-6">
+            <CredentialGallery />
+          </div>
+        )}
       </div>
     </div>
   );

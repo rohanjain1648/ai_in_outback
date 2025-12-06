@@ -1,5 +1,5 @@
 import React, { useState, useRef, useCallback, useEffect } from 'react';
-import { Camera, RotateCcw, FlashOff, FlashOn, X, Check, RefreshCw } from 'lucide-react';
+import { Camera, RotateCcw, Zap, ZapOff, X, Check, RefreshCw } from 'lucide-react';
 import { useDeviceDetection } from '../../utils/mobileDetection';
 import TouchButton from './TouchButton';
 
@@ -54,7 +54,7 @@ const MobileCamera: React.FC<MobileCameraProps> = ({
   const [flashEnabled, setFlashEnabled] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  
+
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const deviceInfo = useDeviceDetection();
@@ -125,7 +125,7 @@ const MobileCamera: React.FC<MobileCameraProps> = ({
       // Set canvas dimensions based on aspect ratio
       const videoWidth = video.videoWidth;
       const videoHeight = video.videoHeight;
-      
+
       let canvasWidth = videoWidth;
       let canvasHeight = videoHeight;
 
@@ -135,20 +135,20 @@ const MobileCamera: React.FC<MobileCameraProps> = ({
         canvasWidth = size;
         canvasHeight = size;
       } else if (aspectRatio === '4:3') {
-        if (videoWidth / videoHeight > 4/3) {
-          canvasWidth = videoHeight * (4/3);
+        if (videoWidth / videoHeight > 4 / 3) {
+          canvasWidth = videoHeight * (4 / 3);
           canvasHeight = videoHeight;
         } else {
           canvasWidth = videoWidth;
-          canvasHeight = videoWidth * (3/4);
+          canvasHeight = videoWidth * (3 / 4);
         }
       } else if (aspectRatio === '16:9') {
-        if (videoWidth / videoHeight > 16/9) {
-          canvasWidth = videoHeight * (16/9);
+        if (videoWidth / videoHeight > 16 / 9) {
+          canvasWidth = videoHeight * (16 / 9);
           canvasHeight = videoHeight;
         } else {
           canvasWidth = videoWidth;
-          canvasHeight = videoWidth * (9/16);
+          canvasHeight = videoWidth * (9 / 16);
         }
       }
 
@@ -238,7 +238,7 @@ const MobileCamera: React.FC<MobileCameraProps> = ({
     try {
       const track = stream.getVideoTracks()[0];
       const capabilities = track.getCapabilities();
-      
+
       if (capabilities.torch) {
         await track.applyConstraints({
           advanced: [{ torch: !flashEnabled } as any]
@@ -268,7 +268,7 @@ const MobileCamera: React.FC<MobileCameraProps> = ({
           }
         }
       };
-      
+
       onCapture(capturedImage, metadata);
     }
   };
@@ -300,17 +300,17 @@ const MobileCamera: React.FC<MobileCameraProps> = ({
           size="sm"
           icon={<X className="w-5 h-5" />}
         />
-        
+
         <div className="flex items-center space-x-2">
           {enableFlash && (
             <TouchButton
               onClick={toggleFlash}
               variant="ghost"
               size="sm"
-              icon={flashEnabled ? <FlashOn className="w-5 h-5" /> : <FlashOff className="w-5 h-5" />}
+              icon={flashEnabled ? <Zap className="w-5 h-5" /> : <ZapOff className="w-5 h-5" />}
             />
           )}
-          
+
           {enableFrontCamera && (
             <TouchButton
               onClick={switchCamera}
@@ -353,8 +353,8 @@ const MobileCamera: React.FC<MobileCameraProps> = ({
 
         {/* Aspect ratio guide */}
         {aspectRatio === 'square' && !capturedImage && (
-          <div className="absolute inset-4 border-2 border-white border-opacity-50 rounded-lg pointer-events-none" 
-               style={{ aspectRatio: '1/1', margin: 'auto' }} />
+          <div className="absolute inset-4 border-2 border-white border-opacity-50 rounded-lg pointer-events-none"
+            style={{ aspectRatio: '1/1', margin: 'auto' }} />
         )}
       </div>
 
@@ -370,7 +370,7 @@ const MobileCamera: React.FC<MobileCameraProps> = ({
             >
               Retake
             </TouchButton>
-            
+
             <TouchButton
               onClick={confirmCapture}
               variant="primary"
