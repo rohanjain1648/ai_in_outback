@@ -1,0 +1,13 @@
+{
+    "name": "Pre-commit Tests",
+    "description": "Run linting and tests before committing code",
+    "trigger": {
+        "type": "manual",
+        "label": "Run Pre-commit Checks"
+    },
+    "action": {
+        "type": "command",
+        "command": "npm run lint && npm test -- --passWithNoTests"
+    },
+    "enabled": true
+}

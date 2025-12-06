@@ -1,0 +1,13 @@
+{
+    "name": "Accessibility Check",
+    "description": "Run accessibility tests on component files",
+    "trigger": {
+        "type": "onSave",
+        "filePattern": "**/*.tsx"
+    },
+    "action": {
+        "type": "message",
+        "message": "Remember to verify accessibility: ARIA labels, keyboard navigation, color contrast, and screen reader support. Run jest-axe tests if this is a new component."
+    },
+    "enabled": true
+}
